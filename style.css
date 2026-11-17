@@ -162,7 +162,7 @@ section{padding:84px 0}
 
 /* footer */
 .site-footer{background:var(--green-d);color:#D5E2D9;padding:56px 0 28px}
-.foot-grid{display:grid;grid-template-columns:minmax(0,2fr) repeat(2,minmax(0,1fr));gap:40px}
+.foot-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,.8fr) minmax(0,1.35fr) minmax(0,1fr);gap:32px}
 .foot-grid img{height:40px;width:auto;margin-bottom:16px}
 .foot-grid h4{margin:0 0 12px;color:#fff;font-size:14px;letter-spacing:.06em;text-transform:uppercase}
 .foot-grid ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
@@ -247,3 +247,27 @@ html.modal-open{overflow:hidden}
   .nav-links .lang a{justify-content:flex-start;padding:0 14px 0 0;min-width:0}
   .nav-links .lang a+.sep+a{padding-left:14px}
 }
+
+.prose{max-width:760px}
+.prose .updated{color:var(--muted);font-size:15px;margin:0 0 8px}
+.prose-sec{margin-top:36px}
+.prose-sec h2{font-size:24px;margin:0 0 12px}
+.prose p,.prose li{line-height:1.7}
+.prose ul{padding-left:22px;margin:12px 0}
+.prose li + li{margin-top:10px}
+.prose a:not(.btn){color:var(--green);text-decoration:underline;text-underline-offset:3px}
+.facts{margin:0;display:grid;gap:0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#fff}
+.facts > div{display:grid;grid-template-columns:minmax(0,220px) minmax(0,1fr);gap:16px;padding:14px 20px}
+.facts > div + div{border-top:1px solid var(--line)}
+.facts dt{font-weight:700;color:var(--ink)}
+.facts dd{margin:0;overflow-wrap:anywhere}
+.nf{padding:72px 0 96px}
+.nf-code{font-size:clamp(72px,16vw,140px);font-weight:800;line-height:1;margin:32px 0 8px;color:var(--green)}
+.nf-cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:48px}
+.nf h1{font-size:clamp(26px,4vw,34px);margin:0 0 12px}
+.nf .btn{margin:8px 8px 0 0}
+.foot-legal{display:flex;flex-wrap:wrap;gap:4px 20px;margin-top:0}
+.foot-grid a.foot-legal-a{min-height:44px}
+@media (max-width:860px){.facts > div{grid-template-columns:1fr;gap:2px}.nf-cols{grid-template-columns:1fr;gap:32px}}
+.foot-note{color:#D5E2D9;padding:6px 0;line-height:1.5}
+.foot-grid ul a{min-height:44px}.foot-grid ul{gap:0}
