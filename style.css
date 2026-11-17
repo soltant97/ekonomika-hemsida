@@ -284,3 +284,22 @@ html.modal-open{overflow:hidden}
 .pkg-featured{border:2px solid var(--green);box-shadow:0 18px 44px rgba(30,58,45,.12)}
 .pkg-badge{position:absolute;top:-14px;left:24px;background:var(--green);color:#fff;font-size:13px;font-weight:700;padding:5px 14px;border-radius:999px}
 .pkg-note{margin:28px 0 0;color:var(--muted);max-width:640px}
+.who-grid{display:grid;grid-template-columns:minmax(0,11fr) minmax(0,9fr);gap:56px;align-items:center}
+.who-grid .sec-head{margin-bottom:24px}
+.hero-art{display:flex;align-items:center;justify-content:center;padding:8px}
+.hero-art .sym{width:min(100%,440px);height:auto;overflow:visible;animation:symFloat 7s ease-in-out infinite;filter:drop-shadow(0 22px 28px rgba(30,58,45,.18))}
+.sym .row{animation-duration:8s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+.sym .r1{animation-name:slideA}
+.sym .r2{animation-name:slideB}
+.sym .r3{animation-name:slideA;animation-delay:-4s}
+.sym .g1{animation:shimL1 6s ease-in-out infinite}
+.sym .g2{animation:shimL2 6s ease-in-out infinite}
+.sym .d2{animation:shimD 6s ease-in-out infinite}
+@keyframes symFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes slideA{0%,100%{transform:translateX(-40px)}50%{transform:translateX(40px)}}
+@keyframes slideB{0%,100%{transform:translateX(40px)}50%{transform:translateX(-40px)}}
+@keyframes shimL1{0%,100%{stop-color:#6CBF6C}50%{stop-color:#9BE08F}}
+@keyframes shimL2{0%,100%{stop-color:#9BE08F}50%{stop-color:#5BB071}}
+@keyframes shimD{0%,100%{stop-color:#3E7358}50%{stop-color:#2F5A45}}
+@media (prefers-reduced-motion:reduce){.hero-art .sym,.sym .row,.sym .g1,.sym .g2,.sym .d2{animation:none}}
+@media (max-width:860px){.who-grid{grid-template-columns:1fr;gap:36px}.hero-art{order:-1;padding:0}.hero-art .sym{width:min(60%,260px)}}
