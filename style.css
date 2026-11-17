@@ -272,3 +272,15 @@ html.modal-open{overflow:hidden}
 .foot-note{color:#D5E2D9;padding:6px 0;line-height:1.5}
 .foot-grid ul a{min-height:44px}.foot-grid ul{gap:0}
 @media (max-width:520px){.brand img{height:44px}.nav{height:72px}.nav-links{top:72px}}
+.pkgs{align-items:stretch}
+.pkg{position:relative;display:flex;flex-direction:column}
+.pkg h3{margin:0;font-size:22px}
+.pkg-sub{margin:6px 0 0;color:var(--muted);font-size:15px}
+.pkg-price{margin:18px 0 6px;font-size:34px;font-weight:800;color:var(--green);line-height:1.1}
+.pkg-price.quote{font-size:22px;line-height:1.25}
+.pkg-list{list-style:none;margin:16px 0 24px;padding:0;display:grid;gap:12px;flex:1;align-content:start}
+.pkg-list li{display:flex;gap:10px;align-items:flex-start;line-height:1.45}
+.pkg-list svg{flex:0 0 20px;width:20px;height:20px;margin-top:2px;color:var(--green)}
+.pkg-featured{border:2px solid var(--green);box-shadow:0 18px 44px rgba(30,58,45,.12)}
+.pkg-badge{position:absolute;top:-14px;left:24px;background:var(--green);color:#fff;font-size:13px;font-weight:700;padding:5px 14px;border-radius:999px}
+.pkg-note{margin:28px 0 0;color:var(--muted);max-width:640px}
