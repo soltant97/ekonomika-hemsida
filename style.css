@@ -286,13 +286,14 @@ html.modal-open{overflow:hidden}
 .pkg-note{margin:28px 0 0;color:var(--muted);max-width:640px}
 .who-grid{display:grid;grid-template-columns:minmax(0,11fr) minmax(0,9fr);gap:56px;align-items:center}
 .who-grid .sec-head{margin-bottom:24px}
-.hero-art{display:flex;align-items:center;justify-content:center;padding:8px;animation:rollIn 1.9s cubic-bezier(.2,.7,.2,1) both}
-@keyframes rollIn{0%{transform:translateX(75vw) rotate(540deg);opacity:0}12%{opacity:1}100%{transform:none;opacity:1}}
-.hero-art .sym{width:min(100%,440px);height:auto;overflow:visible;animation:symFloat 7s ease-in-out 1.9s infinite;filter:drop-shadow(0 22px 28px rgba(30,58,45,.18))}
-.sym .row{animation-duration:8s;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-delay:1.9s;animation-fill-mode:backwards}
+.hero-copy{position:relative;z-index:2}
+.hero-art{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;padding:8px;animation:rollIn 3.8s cubic-bezier(.25,.6,.25,1) both}
+@keyframes rollIn{0%{transform:translateX(-85vw) rotate(-540deg);opacity:0}8%{opacity:1}100%{transform:none;opacity:1}}
+.hero-art .sym{width:min(100%,440px);height:auto;overflow:visible;animation:symFloat 7s ease-in-out 3.8s infinite;filter:drop-shadow(0 22px 28px rgba(30,58,45,.18))}
+.sym .row{animation-duration:8s;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-delay:3.8s;animation-fill-mode:backwards}
 .sym .r1{animation-name:slideA}
 .sym .r2{animation-name:slideB}
-.sym .r3{animation-name:slideA;animation-delay:-2.1s}
+.sym .r3{animation-name:slideA;animation-delay:-.2s}
 .sym .g1{animation:shimL1 6s ease-in-out infinite}
 .sym .g2{animation:shimL2 6s ease-in-out infinite}
 .sym .d2{animation:shimD 6s ease-in-out infinite}
