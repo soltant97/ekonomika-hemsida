@@ -308,19 +308,20 @@ html.modal-open{overflow:hidden}
 
 /* ---------- Intro (startsidan): symbol + bokstäver faller ned och studsar, sedan slogan ---------- */
 .intro{display:none}
-.intro-active .intro{position:fixed;inset:0;z-index:1000;background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden;transition:transform .9s cubic-bezier(.76,0,.24,1)}
+.intro-active .intro{position:fixed;inset:0;z-index:1000;background:transparent;isolation:isolate;display:flex;align-items:center;justify-content:center;overflow:hidden;transition:transform .9s cubic-bezier(.76,0,.24,1)}
 .intro-active:not(.intro-out) body{overflow:hidden}
-.intro-active:not(.intro-out) .hero-art{animation-play-state:paused}
+.intro-active .hero-art{animation:none;opacity:0}
+.intro-active .hero-art.landed{opacity:1}
 .intro.done{transform:translateY(-100%)}
 .intro-stack{display:flex;flex-direction:column;align-items:center}
 .intro-logo{position:relative;aspect-ratio:1928/390;width:min(84vw,640px)}
 .intro-logo img{position:absolute;top:0;height:100%;display:block;transform-origin:50% 100%;opacity:0;transform:translateY(-75vh)}
-.intro.play .intro-sym{animation:introDrop 1.5s .2s forwards}
-.intro.play .intro-ltr{animation:introDrop 1.35s calc(1s + var(--i) * .15s) forwards}
+.intro.play .intro-sym{animation:introDrop 1.35s .12s forwards}
+.intro.play .intro-ltr{animation:introDrop 1.2s calc(.7s + var(--i) * .11s) forwards}
 .intro-slogan{margin:clamp(14px,2.4vw,26px) 0 0;font-size:clamp(16px,2.3vw,24px);font-weight:500;letter-spacing:.04em;color:#315d49;opacity:0;text-align:center}
-.intro.play .intro-slogan{animation:introFade 1.4s ease-in-out 3.4s forwards}
+.intro.play .intro-slogan{animation:introFade .8s ease-out 2.45s forwards}
 .intro-bar{position:absolute;left:0;bottom:0;height:3px;width:100%;background:#6abf69;transform-origin:left;transform:scaleX(0)}
-.intro.play .intro-bar{animation:introBar 6.1s linear forwards}
+.intro.play .intro-bar{animation:introBar 4s linear forwards}
 .intro-skip{position:absolute;right:20px;bottom:20px;background:none;border:1px solid #d7e2dc;color:#5d6b64;font:inherit;font-size:13px;padding:8px 14px;border-radius:999px;cursor:pointer}
 .intro-skip:hover,.intro-skip:focus-visible{border-color:#315d49;color:#315d49}
 @keyframes introDrop{
@@ -342,3 +343,11 @@ html.modal-open{overflow:hidden}
   .intro-active .intro{transition:opacity .4s!important}
   .intro.done{transform:none;opacity:0;pointer-events:none}
 }
+
+/* överlämning: introts symbol reser vidare till hero-symbolen */
+.intro.fade{opacity:0;transition:opacity .5s}
+.intro-handoff .intro{background:transparent;pointer-events:none}
+.intro::before{content:"";position:absolute;inset:0;background:#fff;z-index:-1;transition:transform 1s cubic-bezier(.7,0,.25,1) .5s}
+.intro-handoff .intro::before{transform:translateX(100%)}
+.intro-handoff .intro-bar,.intro-handoff .intro-skip{opacity:0!important;transition:opacity .3s}
+.intro-active .intro{transform:none}

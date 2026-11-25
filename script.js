@@ -17,28 +17,92 @@
   }
 
 
-  /* intro på startsidan – visas en gång per besök (session) */
+  /* intro på startsidan – visas en gång per besök (session).
+     När introt är klart "reser" symbolen vidare och landar som symbolen i hero-delen. */
   (function () {
     var intro = document.getElementById('intro');
     var root = document.documentElement;
     if (!intro) { return; }
     if (!root.classList.contains('intro-active')) { intro.parentNode.removeChild(intro); return; }
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var timer;
+    var heroArt = document.querySelector('.hero-art');
+    var target = heroArt && heroArt.querySelector('.sym');
+    var flyer = intro.querySelector('.intro-sym');
+    var timer, finished = false;
+
+    function cleanup() {
+      if (intro.parentNode) { intro.parentNode.removeChild(intro); }
+      root.classList.remove('intro-active', 'intro-out', 'intro-handoff');
+    }
+    function land() {
+      if (heroArt) {
+        heroArt.style.animation = 'none';           /* hero-symbolens egen inrullning behövs inte – den har redan landat */
+        heroArt.classList.add('landed');
+        if (heroArt.animate && !reduce) {
+          heroArt.animate([{ transform: 'scale(.94)' }, { transform: 'scale(1.04)' }, { transform: 'none' }],
+            { duration: 420, easing: 'cubic-bezier(.3,1.6,.5,1)' });
+        }
+      }
+      if (flyer && flyer.animate) {
+        flyer.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 320, fill: 'forwards' }).onfinish = cleanup;
+      } else { cleanup(); }
+    }
     function finish() {
+      if (finished) { return; }
+      finished = true;
       clearTimeout(timer);
       try { sessionStorage.setItem('ekIntro', '1'); } catch (e) {}
-      intro.classList.add('done');
       root.classList.add('intro-out');
-      setTimeout(function () {
-        if (intro.parentNode) { intro.parentNode.removeChild(intro); }
-        root.classList.remove('intro-active', 'intro-out');
-      }, 1000);
+
+      /* utan hero-symbol eller med reducerad rörelse: tona bara bort introt */
+      if (!target || !flyer || !flyer.animate || reduce) {
+        intro.classList.add('fade');
+        if (heroArt) { heroArt.style.animation = 'none'; heroArt.classList.add('landed'); }
+        setTimeout(cleanup, 600);
+        return;
+      }
+
+      root.classList.add('intro-handoff');           /* den vita bakgrunden glider ut åt höger */
+      flyer.getAnimations && flyer.getAnimations().forEach(function (a) { a.finish(); });
+      var vw = window.innerWidth;
+      /* bokstäverna åker iväg åt höger – sista bokstaven först */
+      var letters = Array.prototype.slice.call(intro.querySelectorAll('.intro-ltr'));
+      letters.forEach(function (l, i) {
+        l.getAnimations && l.getAnimations().forEach(function (a) { a.finish(); });
+        var order = letters.length - 1 - i;
+        l.animate([
+          { transform: 'none', opacity: 1 },
+          { transform: 'translateX(-10px)', opacity: 1, offset: .2 },
+          { transform: 'translateX(' + vw + 'px) skewX(-12deg)', opacity: 0 }
+        ], { duration: 380, delay: order * 80, easing: 'cubic-bezier(.6,0,.9,.4)', fill: 'forwards' });
+      });
+      var slogan = intro.querySelector('.intro-slogan');
+      if (slogan) {
+        slogan.getAnimations && slogan.getAnimations().forEach(function (a) { a.finish(); });
+        /* sloganen tonas ut på plats – bara loggan åker iväg */
+        slogan.animate([{ opacity: 1 }, { opacity: 0 }],
+          { duration: 500, easing: 'ease-out', fill: 'forwards' });
+      }
+      var a = flyer.getBoundingClientRect();
+      var b = target.getBoundingClientRect();
+      var dx = (b.left + b.width / 2) - (a.left + a.width / 2);
+      var dy = (b.top + b.height / 2) - (a.top + a.height / 2);
+      var s = b.width / a.width;
+      flyer.style.transformOrigin = '50% 50%';
+      flyer.style.zIndex = '2';
+      /* symbolen tar sats, rullar åt höger och landar på hero-symbolens plats */
+      var fly = flyer.animate([
+        { transform: 'translate(0,0) rotate(0) scale(1)', offset: 0 },
+        { transform: 'translate(-18px,0) rotate(-10deg) scale(1)', offset: .16 },
+        { transform: 'translate(' + dx * .7 + 'px,' + dy * .25 + 'px) rotate(250deg) scale(' + (1 + (s - 1) * .6) + ')', offset: .7 },
+        { transform: 'translate(' + dx + 'px,' + dy + 'px) rotate(360deg) scale(' + s + ')', offset: 1 }
+      ], { duration: 1300, delay: 580, easing: 'cubic-bezier(.5,0,.2,1)', fill: 'forwards' });
+      fly.onfinish = land;
     }
     var skip = intro.querySelector('.intro-skip');
     if (skip) { skip.addEventListener('click', finish); }
     intro.classList.add('play');
-    timer = setTimeout(finish, reduce ? 1200 : 6200);
+    timer = setTimeout(finish, reduce ? 1000 : 4000);
   })();
 
   /* fade-in on load and scroll */
