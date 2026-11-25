@@ -414,3 +414,4 @@ html.modal-open{overflow:hidden}
 @media (prefers-reduced-motion:reduce){.pkg{transition:none}.pkg:hover{transform:none}}
 
 .pkg-from{display:block;font-size:14px;font-weight:600;color:var(--muted);letter-spacing:.01em;margin-bottom:4px}
+.pkg-per{font-size:16px;font-weight:600;color:var(--muted);margin-left:4px}
