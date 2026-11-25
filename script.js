@@ -37,15 +37,19 @@
     function land() {
       if (heroArt) {
         heroArt.style.animation = 'none';           /* hero-symbolens egen inrullning behövs inte – den har redan landat */
-        heroArt.classList.add('landed');
-        if (heroArt.animate && !reduce) {
-          heroArt.animate([{ transform: 'scale(.94)' }, { transform: 'scale(1.04)' }, { transform: 'none' }],
-            { duration: 420, easing: 'cubic-bezier(.3,1.6,.5,1)' });
-        }
+        heroArt.classList.add('landed');            /* visas direkt under den landade symbolen … */
       }
-      if (flyer && flyer.animate) {
-        flyer.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 320, fill: 'forwards' }).onfinish = cleanup;
+      if (flyer && flyer.animate) {                 /* … som sedan tonas bort ovanpå, utan hopp */
+        flyer.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 450, easing: 'ease-out', fill: 'forwards' }).onfinish = cleanup;
       } else { cleanup(); }
+    }
+    /* hero-symbolens synliga yta på skärmen (inte hela svg-rutan) */
+    function drawnRect(svg) {
+      try {
+        var bb = svg.getBBox(), m = svg.getScreenCTM();
+        if (bb.width && m) { return { left: m.e + bb.x * m.a, top: m.f + bb.y * m.d, width: bb.width * m.a, height: bb.height * m.d }; }
+      } catch (e) {}
+      return svg.getBoundingClientRect();
     }
     function finish() {
       if (finished) { return; }
@@ -82,11 +86,13 @@
         slogan.animate([{ opacity: 1 }, { opacity: 0 }],
           { duration: 500, easing: 'ease-out', fill: 'forwards' });
       }
-      var a = flyer.getBoundingClientRect();
-      var b = target.getBoundingClientRect();
+      var r = flyer.getBoundingClientRect();
+      /* själva symbolen i bilden (bilden har lite luft runt sig) */
+      var a = { left: r.left + r.width * .0224, top: r.top + r.height * .0231, width: r.width * .9602, height: r.height * .9538 };
+      var b = drawnRect(target);
       var dx = (b.left + b.width / 2) - (a.left + a.width / 2);
       var dy = (b.top + b.height / 2) - (a.top + a.height / 2);
-      var s = b.width / a.width;
+      var s = (b.width / a.width + b.height / a.height) / 2;
       flyer.style.transformOrigin = '50% 50%';
       flyer.style.zIndex = '2';
       /* symbolen tar sats, rullar åt höger och landar på hero-symbolens plats */
