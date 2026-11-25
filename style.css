@@ -294,13 +294,13 @@ html.modal-open{overflow:hidden}
 .who-grid{display:grid;grid-template-columns:minmax(0,11fr) minmax(0,9fr);gap:56px;align-items:center}
 .who-grid .sec-head{margin-bottom:24px}
 .hero-copy{position:relative;z-index:2}
-.hero-art{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;padding:8px;animation:rollIn 3.8s cubic-bezier(.3,.5,.85,.8) both}
+.hero-art{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;padding:8px;animation:rollIn 1.7s cubic-bezier(.25,.6,.3,1) both}
 @keyframes rollIn{0%{transform:translateX(-85vw) rotate(-540deg);opacity:0}8%{opacity:1}100%{transform:none;opacity:1}}
-.hero-art .sym{width:min(100%,440px);height:auto;overflow:visible;animation:symFloat 7s ease-in-out 3.8s infinite;filter:drop-shadow(0 22px 28px rgba(30,58,45,.18))}
-.sym .row{animation-duration:8s;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-delay:3.8s;animation-fill-mode:backwards}
+.hero-art .sym{width:min(100%,440px);height:auto;overflow:visible;animation:symFloat 7s ease-in-out 1.7s infinite;filter:drop-shadow(0 22px 28px rgba(30,58,45,.18))}
+.sym .row{animation-duration:8s;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-delay:1.7s;animation-fill-mode:backwards}
 .sym .r1{animation-name:slideA}
 .sym .r2{animation-name:slideB}
-.sym .r3{animation-name:slideA;animation-delay:4.1s}
+.sym .r3{animation-name:slideA;animation-delay:2s}
 .sym .g1{animation:shimL1 6s ease-in-out infinite}
 .sym .g2{animation:shimL2 6s ease-in-out infinite}
 .sym .d2{animation:shimD 6s ease-in-out infinite}
@@ -371,11 +371,11 @@ html.modal-open{overflow:hidden}
 .hero-word .hero-art{position:relative;width:44%;aspect-ratio:402/390;flex:none;padding:0;display:block;order:0}
 .hero-word .hero-art .sym{position:absolute;left:-2.4%;top:-2.6%;width:106.6%;max-width:none;height:auto}
 .hero-ltrs{position:relative;flex:1;aspect-ratio:1526/390;margin:0 0 1.2% 2.5%}
-.hero-ltrs .hl{position:absolute;top:0;height:100%;display:block;opacity:0;animation:hlIn .6s cubic-bezier(.3,1.4,.5,1) calc(var(--hd,2.9s) + var(--i) * .08s) forwards}
+.hero-ltrs .hl{position:absolute;top:0;height:100%;display:block;opacity:0;animation:hlIn .6s cubic-bezier(.3,1.4,.5,1) calc(var(--hd,1.3s) + var(--i) * .08s) forwards}
 .intro-active .hero-ltrs .hl{animation:none;opacity:0}
 .hero-art.landed ~ .hero-ltrs .hl{--hd:.05s}
 @keyframes hlIn{0%{opacity:0;transform:translateX(-24px) scale(.92)}100%{opacity:1;transform:none}}
-.hero-new .hero-tag{font-family:inherit;margin:22px 0 0 46.5%;font-size:clamp(17px,1.6vw,21px);line-height:1.4;font-weight:700;color:#2f533c;white-space:nowrap;opacity:0;animation:hlTag .8s ease-out var(--td,3.6s) forwards}
+.hero-new .hero-tag{font-family:inherit;margin:22px 0 0 46.5%;font-size:clamp(17px,1.6vw,21px);line-height:1.4;font-weight:700;color:#2f533c;white-space:nowrap;opacity:0;animation:hlTag .8s ease-out var(--td,2s) forwards}
 .intro-active .hero-new .hero-tag{animation:none}
 .hero-new:has(.hero-art.landed) .hero-tag{--td:.6s}
 @keyframes hlTag{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
