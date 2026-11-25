@@ -63,36 +63,62 @@
         return;
       }
 
-      /* mobil: hela introts logga flyger upp och landar i sidhuvudets logga */
+      /* mobil: symbolen rullar upp till sidhuvudets logga, sedan kommer bokstäverna en och en */
       var brandImg = document.querySelector('.site-header .brand img');
-      var logo = intro.querySelector('.intro-logo');
-      if (window.matchMedia('(max-width: 860px)').matches && brandImg && logo && logo.animate) {
+      if (window.matchMedia('(max-width: 860px)').matches && brandImg && flyer && flyer.animate) {
         root.classList.add('intro-handoff');
-        var parts = Array.prototype.slice.call(logo.querySelectorAll('img'));
-        parts.forEach(function (p) { p.getAnimations && p.getAnimations().forEach(function (an) { an.finish(); }); });
+        var mLetters = Array.prototype.slice.call(intro.querySelectorAll('.intro-ltr'));
+        flyer.getAnimations && flyer.getAnimations().forEach(function (an) { an.finish(); });
+        mLetters.forEach(function (l) {
+          l.getAnimations && l.getAnimations().forEach(function (an) { an.finish(); });
+          l.animate([{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(-14px) scale(.9)' }],
+            { duration: 300, delay: (mLetters.length - 1 - mLetters.indexOf(l)) * 35, easing: 'ease-in', fill: 'forwards' });
+        });
         var sl = intro.querySelector('.intro-slogan');
         if (sl) {
           sl.getAnimations && sl.getAnimations().forEach(function (an) { an.finish(); });
-          sl.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 400, easing: 'ease-out', fill: 'forwards' });
+          sl.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 300, easing: 'ease-out', fill: 'forwards' });
         }
-        var lr = logo.getBoundingClientRect(), br = brandImg.getBoundingClientRect();
-        /* loggans synliga yta i png-filen (den har luft runt sig) */
-        var bl = br.left + br.width * 37 / 640, bw = br.width * 572 / 640, bcy = br.top + br.height * 99.5 / 211;
-        var sc = bw / lr.width;
-        var mx = bl - lr.left, my = bcy - (lr.top + lr.height / 2);
-        logo.style.transformOrigin = '0 50%';
-        var mt = { duration: 1150, delay: 350, easing: 'cubic-bezier(.55,0,.2,1)', fill: 'both' };
-        var mv = logo.animate([
+        /* loggans synliga yta i sidhuvudets png (filen har luft runt sig) */
+        var br = brandImg.getBoundingClientRect();
+        var cl = br.left + br.width * 37 / 640, cw = br.width * 572 / 640, cy = br.top + br.height * 99.5 / 211;
+        var tb = { left: cl, width: cw * 114 / 572, top: br.top + br.height * 45 / 211, height: br.height * 108 / 211 };
+        var fr = flyer.getBoundingClientRect();
+        var fa = { left: fr.left + fr.width * .0224, top: fr.top + fr.height * .0231, width: fr.width * .9602, height: fr.height * .9538 };
+        var mdx = (tb.left + tb.width / 2) - (fa.left + fa.width / 2);
+        var mdy = (tb.top + tb.height / 2) - (fa.top + fa.height / 2);
+        var ms = (tb.width / fa.width + tb.height / fa.height) / 2;
+        flyer.style.transformOrigin = '50% 50%';
+        /* tar sats, rullar och snurrar upp, glider sista biten in på plats */
+        var roll = flyer.animate([
           { offset: 0, transform: 'none' },
-          { offset: .18, transform: 'translate(0,10px) scale(1.03)' },
-          { offset: 1, transform: 'translate(' + mx + 'px,' + my + 'px) scale(' + sc + ')' }
-        ], mt);
-        /* symbolen rullar ett varv på vägen upp */
-        var sy = logo.querySelector('.intro-sym');
-        if (sy) { sy.style.transformOrigin = '50% 50%'; sy.animate([{ transform: 'rotate(0deg)' }, { transform: 'rotate(360deg)' }], mt); }
-        mv.onfinish = function () {
-          if (heroArt) { heroArt.style.animation = 'none'; heroArt.classList.add('landed'); }
-          cleanup();
+          { offset: .14, transform: 'translate(10px,12px) rotate(25deg) scale(1.04)' },
+          { offset: .62, transform: 'translate(' + mdx * .72 + 'px,' + mdy * .9 + 'px) rotate(-560deg) scale(' + (1 + (ms - 1) * .85) + ')' },
+          { offset: .86, transform: 'translate(' + (mdx + 6) + 'px,' + mdy + 'px) rotate(-725deg) scale(' + ms + ')' },
+          { offset: 1, transform: 'translate(' + mdx + 'px,' + mdy + 'px) rotate(-720deg) scale(' + ms + ')' }
+        ], { duration: 1350, delay: 280, easing: 'cubic-bezier(.45,0,.25,1)', fill: 'both' });
+        roll.onfinish = function () {
+          /* bokstäverna dyker upp en och en bredvid symbolen, på exakt loggans plats */
+          var box = document.createElement('div');
+          var bh = cw / (1928 / 390);
+          box.style.cssText = 'position:fixed;z-index:1002;pointer-events:none;left:' + cl + 'px;top:' + (cy - bh / 2) + 'px;width:' + cw + 'px;height:' + bh + 'px';
+          var last;
+          mLetters.forEach(function (l, i) {
+            var c = document.createElement('img');
+            c.src = l.getAttribute('src'); c.alt = '';
+            c.style.cssText = 'position:absolute;top:0;height:100%;left:' + l.style.left + ';width:' + l.style.width + ';opacity:0';
+            box.appendChild(c);
+            last = c.animate([{ opacity: 0, transform: 'translateX(-8px) scale(.85)' }, { opacity: 1, transform: 'none' }],
+              { duration: 380, delay: 60 + i * 85, easing: 'cubic-bezier(.3,1.5,.5,1)', fill: 'both' });
+          });
+          document.body.appendChild(box);
+          intro.style.background = 'transparent';
+          last.onfinish = function () {
+            if (heroArt) { heroArt.style.animation = 'none'; heroArt.classList.add('landed'); }
+            cleanup();
+            brandImg.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 250, fill: 'both' });
+            box.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 250, fill: 'both' }).onfinish = function () { box.remove(); };
+          };
         };
         return;
       }

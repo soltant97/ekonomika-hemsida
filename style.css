@@ -382,23 +382,23 @@ html.modal-open{overflow:hidden}
 @media (max-width:520px){.hero-new .hero-tag{margin-left:0}}
 @media (prefers-reduced-motion:reduce){.hero-ltrs .hl,.hero-new .hero-tag{animation:none;opacity:1}}
 
-/* Mobil: språkval i sidhuvudet + menyknapp med text */
+/* Mobil: språkval i sidhuvudet + menyknapp med text (samma stil som menyn på datorn) */
 .lang-m{display:none}
 @media (max-width:960px){
-  .lang-m{display:flex;align-items:center;margin:0 4px 0 auto}
-  .lang-m a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;min-width:36px;padding:0 6px;text-decoration:none;font-size:15px;font-weight:600;color:var(--muted)}
-  .lang-m a[aria-current="true"]{color:var(--ink);font-weight:800}
-  .lang-m .sep{color:var(--line)}
+  .lang-m{display:flex;align-items:center;margin:0 2px 0 auto}
+  .lang-m a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;min-width:38px;padding:0 6px;border-radius:999px;text-decoration:none;font-size:14px;font-weight:600;color:var(--muted);transition:background .2s}
+  .lang-m a:hover{background:var(--mint)}
+  .lang-m a[aria-current="true"]{color:var(--green);font-weight:800}
+  .lang-m .sep{color:var(--line);font-weight:400}
   .nav-links li:has(> .lang){display:none}
-  .nav-toggle{margin-left:4px;gap:10px;min-height:48px;padding:0 20px 0 24px;border:0;border-radius:999px;background:var(--green);color:#fff;font:inherit;font-size:17px;font-weight:700;transition:background .2s}
-  .nav-toggle:hover{background:var(--green-d)}
-  .nav-toggle[aria-expanded="true"]{background:var(--green-d)}
-  .nav-toggle svg{flex:none;width:20px;height:20px}
+  .nav-toggle{margin-left:6px;gap:8px;min-height:44px;padding:0 16px 0 18px;border:0;border-radius:999px;background:var(--mint);color:var(--green);font:inherit;font-size:15px;font-weight:600;transition:background .2s,color .2s}
+  .nav-toggle:hover,.nav-toggle[aria-expanded="true"]{background:var(--green);color:#fff}
+  .nav-toggle svg{flex:none;width:18px;height:18px}
 }
-@media (max-width:380px){.nav-toggle{padding:0 16px 0 18px;font-size:16px}.lang-m a{min-width:30px}}
+@media (max-width:360px){.nav-toggle{padding:0 12px 0 14px}.lang-m a{min-width:32px}}
 /* Mobil: ingen hero – introts logga landar i sidhuvudets logga */
 @media (max-width:860px){
   .hero{display:none}
   .intro-active .site-header .brand img{opacity:0}
 }
-@media (max-width:860px){.intro-bar,.intro-skip{display:none!important}}
+.intro-bar,.intro-skip{display:none!important}
