@@ -415,3 +415,17 @@ html.modal-open{overflow:hidden}
 
 .pkg-from{display:block;font-size:14px;font-weight:600;color:var(--muted);letter-spacing:.01em;margin-bottom:4px}
 .pkg-per{font-size:16px;font-weight:600;color:var(--muted);margin-left:4px}
+
+/* Engångstjänster – prislista */
+.once{padding-top:0}
+.plist{padding:4px 0}
+.prow{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(40px,1fr) auto auto;gap:20px;align-items:center;padding:20px 28px;border-top:1px solid var(--line);transition:background .2s}
+.prow:first-child{border-top:0}
+.prow h3{font-size:18px;margin:0}
+.prow-txt p{color:var(--muted);font-size:15px;margin:2px 0 0}
+.pdots{border-bottom:2px dotted var(--line);height:1px}
+.pval{margin:0;font-weight:800;font-size:20px;color:var(--green);white-space:nowrap}
+.pval small{font-size:13px;color:var(--muted);font-weight:600}
+.prow .btn{min-height:44px;padding:0 22px}
+@media (hover:hover){.prow:hover{background:var(--mint)}}
+@media (max-width:760px){.prow{grid-template-columns:1fr auto;gap:10px 16px;padding:18px 20px}.pdots{display:none}.prow .btn{grid-column:1/-1;width:100%}}
