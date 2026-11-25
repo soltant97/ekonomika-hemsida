@@ -63,6 +63,40 @@
         return;
       }
 
+      /* mobil: hela introts logga flyger upp och landar i sidhuvudets logga */
+      var brandImg = document.querySelector('.site-header .brand img');
+      var logo = intro.querySelector('.intro-logo');
+      if (window.matchMedia('(max-width: 860px)').matches && brandImg && logo && logo.animate) {
+        root.classList.add('intro-handoff');
+        var parts = Array.prototype.slice.call(logo.querySelectorAll('img'));
+        parts.forEach(function (p) { p.getAnimations && p.getAnimations().forEach(function (an) { an.finish(); }); });
+        var sl = intro.querySelector('.intro-slogan');
+        if (sl) {
+          sl.getAnimations && sl.getAnimations().forEach(function (an) { an.finish(); });
+          sl.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 400, easing: 'ease-out', fill: 'forwards' });
+        }
+        var lr = logo.getBoundingClientRect(), br = brandImg.getBoundingClientRect();
+        /* loggans synliga yta i png-filen (den har luft runt sig) */
+        var bl = br.left + br.width * 37 / 640, bw = br.width * 572 / 640, bcy = br.top + br.height * 99.5 / 211;
+        var sc = bw / lr.width;
+        var mx = bl - lr.left, my = bcy - (lr.top + lr.height / 2);
+        logo.style.transformOrigin = '0 50%';
+        var mt = { duration: 1150, delay: 350, easing: 'cubic-bezier(.55,0,.2,1)', fill: 'both' };
+        var mv = logo.animate([
+          { offset: 0, transform: 'none' },
+          { offset: .18, transform: 'translate(0,10px) scale(1.03)' },
+          { offset: 1, transform: 'translate(' + mx + 'px,' + my + 'px) scale(' + sc + ')' }
+        ], mt);
+        /* symbolen rullar ett varv på vägen upp */
+        var sy = logo.querySelector('.intro-sym');
+        if (sy) { sy.style.transformOrigin = '50% 50%'; sy.animate([{ transform: 'rotate(0deg)' }, { transform: 'rotate(360deg)' }], mt); }
+        mv.onfinish = function () {
+          if (heroArt) { heroArt.style.animation = 'none'; heroArt.classList.add('landed'); }
+          cleanup();
+        };
+        return;
+      }
+
       root.classList.add('intro-handoff');           /* den vita bakgrunden glider ut åt höger */
       flyer.getAnimations && flyer.getAnimations().forEach(function (a) { a.finish(); });
       var vw = window.innerWidth;
