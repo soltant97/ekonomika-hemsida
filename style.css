@@ -399,6 +399,7 @@ html.modal-open{overflow:hidden}
 /* Mobil: ingen hero – introts logga landar i sidhuvudets logga */
 @media (max-width:860px){
   .hero{display:none}
-  .intro-active .site-header .brand img{opacity:0}
+  .hero + .band{display:none}
+  .intro-active .site-header .brand > img{opacity:0}
 }
 .intro-bar,.intro-skip{display:none!important}

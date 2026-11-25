@@ -98,26 +98,40 @@
           { offset: 1, transform: 'translate(' + mdx + 'px,' + mdy + 'px) rotate(-720deg) scale(' + ms + ')' }
         ], { duration: 1350, delay: 280, easing: 'cubic-bezier(.45,0,.25,1)', fill: 'both' });
         roll.onfinish = function () {
-          /* bokstäverna dyker upp en och en bredvid symbolen, på exakt loggans plats */
-          var box = document.createElement('div');
-          var bh = cw / (1928 / 390);
-          box.style.cssText = 'position:fixed;z-index:1002;pointer-events:none;left:' + cl + 'px;top:' + (cy - bh / 2) + 'px;width:' + cw + 'px;height:' + bh + 'px';
+          /* Symbolen och bokstäverna flyttas in i sidhuvudets logga och stannar där –
+             ingen övertoning till png-bilden, så inget flimmer när loggan är klar. */
+          var brand = brandImg.parentNode, bb = brand.getBoundingClientRect();
+          function pct(v, tot) { return (v / tot * 100) + '%'; }
+          var layer = document.createElement('span');
+          layer.className = 'brand-live';
+          layer.setAttribute('aria-hidden', 'true');
+          layer.style.cssText = 'position:absolute;inset:0;pointer-events:none';
+          /* symbolen på exakt den plats där den rullande symbolen landade */
+          var sw = fr.width * ms, sh = fr.height * ms;
+          var scx = fr.left + fr.width / 2 + mdx, scy = fr.top + fr.height / 2 + mdy;
+          var sym = document.createElement('img');
+          sym.src = flyer.getAttribute('src'); sym.alt = '';
+          sym.style.cssText = 'position:absolute;display:block;max-width:none;left:' + pct(scx - sw / 2 - bb.left, bb.width) + ';top:' + pct(scy - sh / 2 - bb.top, bb.height) + ';width:' + pct(sw, bb.width) + ';height:' + pct(sh, bb.height);
+          layer.appendChild(sym);
+          var bh = cw / (1928 / 390), boxL = cl - bb.left, boxT = cy - bh / 2 - bb.top;
           var last;
           mLetters.forEach(function (l, i) {
             var c = document.createElement('img');
             c.src = l.getAttribute('src'); c.alt = '';
-            c.style.cssText = 'position:absolute;top:0;height:100%;left:' + l.style.left + ';width:' + l.style.width + ';opacity:0';
-            box.appendChild(c);
+            var lx = boxL + cw * parseFloat(l.style.left) / 100, lw = cw * parseFloat(l.style.width) / 100;
+            c.style.cssText = 'position:absolute;display:block;max-width:none;opacity:0;left:' + pct(lx, bb.width) + ';top:' + pct(boxT, bb.height) + ';width:' + pct(lw, bb.width) + ';height:' + pct(bh, bb.height);
+            layer.appendChild(c);
             last = c.animate([{ opacity: 0, transform: 'translateX(-8px) scale(.85)' }, { opacity: 1, transform: 'none' }],
               { duration: 380, delay: 60 + i * 85, easing: 'cubic-bezier(.3,1.5,.5,1)', fill: 'both' });
           });
-          document.body.appendChild(box);
+          brand.style.position = 'relative';
+          brandImg.style.opacity = '0';
+          brand.appendChild(layer);
+          flyer.style.visibility = 'hidden';
           intro.style.background = 'transparent';
           last.onfinish = function () {
             if (heroArt) { heroArt.style.animation = 'none'; heroArt.classList.add('landed'); }
             cleanup();
-            brandImg.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 250, fill: 'both' });
-            box.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 250, fill: 'both' }).onfinish = function () { box.remove(); };
           };
         };
         return;
