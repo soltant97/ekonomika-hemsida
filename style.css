@@ -404,3 +404,11 @@ html.modal-open{overflow:hidden}
   .intro-active .site-header .brand > img{opacity:0}
 }
 .intro-bar,.intro-skip{display:none!important}
+
+/* Paketkort: lyfts, får grön ram och tydlig skugga när man pekar på dem */
+.pkg{transition:transform .25s cubic-bezier(.2,.7,.3,1),box-shadow .25s,border-color .25s}
+@media (hover:hover){
+  .pkg:hover{transform:translateY(-8px);border-color:var(--acc);box-shadow:0 28px 60px rgba(30,58,45,.26),0 8px 18px rgba(30,58,45,.10)}
+  .pkg-featured:hover{border-color:var(--green)}
+}
+@media (prefers-reduced-motion:reduce){.pkg{transition:none}.pkg:hover{transform:none}}
