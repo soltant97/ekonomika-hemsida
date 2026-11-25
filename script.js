@@ -17,7 +17,7 @@
   }
 
 
-  /* intro på startsidan – visas en gång per besök (session).
+  /* intro på startsidan – visas vid nytt besök och omladdning, men inte när man klickar sig hit från en annan sida på hemsidan.
      När introt är klart "reser" symbolen vidare och landar som symbolen i hero-delen. */
   (function () {
     var intro = document.getElementById('intro');
@@ -51,7 +51,6 @@
       if (finished) { return; }
       finished = true;
       clearTimeout(timer);
-      try { sessionStorage.setItem('ekIntro', '1'); } catch (e) {}
       root.classList.add('intro-out');
 
       /* utan hero-symbol eller med reducerad rörelse: tona bara bort introt */
