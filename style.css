@@ -58,7 +58,7 @@ p{margin:0}
 .hero-name,.hero-tag{font-family:'Nunito','Plus Jakarta Sans',system-ui,sans-serif}
 .hero-name{font-weight:800;letter-spacing:-.01em}
 .hero-name .hn-split{display:inline-block;color:#2f533c}
-@supports ((-webkit-background-clip:text) or (background-clip:text)){.hero-name .hn-split{background:linear-gradient(to bottom,#2f533c 0,#2f533c var(--hn-cut,58%),#68b663 var(--hn-cut,58%),#68b663 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}}
+@supports ((-webkit-background-clip:text) or (background-clip:text)){.hero-name .hn-split{background:linear-gradient(to bottom,#2f533c 0,#2f533c var(--hn-cut,50%),#68b663 var(--hn-cut,50%),#68b663 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}}
 .hero-tag{margin:-6px 0 0;font-size:clamp(20px,2.4vw,28px);font-weight:700;color:#2f533c}
 .checks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
 .checks li{display:flex;gap:10px;align-items:flex-start;font-weight:500}
