@@ -305,3 +305,40 @@ html.modal-open{overflow:hidden}
 @keyframes shimD{0%,100%{stop-color:#3E7358}50%{stop-color:#2F5A45}}
 @media (prefers-reduced-motion:reduce){.hero-art,.hero-art .sym,.sym .row,.sym .g1,.sym .g2,.sym .d2{animation:none}}
 @media (max-width:860px){.who-grid{grid-template-columns:1fr;gap:36px}.hero-art{order:-1;padding:0}.hero-art .sym{width:min(60%,260px)}}
+
+/* ---------- Intro (startsidan): symbol + bokstäver faller ned och studsar, sedan slogan ---------- */
+.intro{display:none}
+.intro-active .intro{position:fixed;inset:0;z-index:1000;background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden;transition:transform .9s cubic-bezier(.76,0,.24,1)}
+.intro-active:not(.intro-out) body{overflow:hidden}
+.intro-active:not(.intro-out) .hero-art{animation-play-state:paused}
+.intro.done{transform:translateY(-100%)}
+.intro-stack{display:flex;flex-direction:column;align-items:center}
+.intro-logo{position:relative;aspect-ratio:1928/390;width:min(84vw,640px)}
+.intro-logo img{position:absolute;top:0;height:100%;display:block;transform-origin:50% 100%;opacity:0;transform:translateY(-75vh)}
+.intro.play .intro-sym{animation:introDrop 1.5s .2s forwards}
+.intro.play .intro-ltr{animation:introDrop 1.35s calc(1s + var(--i) * .15s) forwards}
+.intro-slogan{margin:clamp(14px,2.4vw,26px) 0 0;font-size:clamp(16px,2.3vw,24px);font-weight:500;letter-spacing:.04em;color:#315d49;opacity:0;text-align:center}
+.intro.play .intro-slogan{animation:introFade 1.4s ease-in-out 3.4s forwards}
+.intro-bar{position:absolute;left:0;bottom:0;height:3px;width:100%;background:#6abf69;transform-origin:left;transform:scaleX(0)}
+.intro.play .intro-bar{animation:introBar 6.1s linear forwards}
+.intro-skip{position:absolute;right:20px;bottom:20px;background:none;border:1px solid #d7e2dc;color:#5d6b64;font:inherit;font-size:13px;padding:8px 14px;border-radius:999px;cursor:pointer}
+.intro-skip:hover,.intro-skip:focus-visible{border-color:#315d49;color:#315d49}
+@keyframes introDrop{
+  0%  {opacity:0;transform:translateY(-75vh) rotate(-8deg) scale(.95,1.12);animation-timing-function:cubic-bezier(.5,0,1,.6)}
+  8%  {opacity:1}
+  38% {opacity:1;transform:translateY(0) rotate(0) scale(1.18,.72);animation-timing-function:cubic-bezier(.2,.9,.4,1)}
+  44% {transform:translateY(-10%) scale(.94,1.1);animation-timing-function:cubic-bezier(0,.5,.5,1)}
+  56% {transform:translateY(-42%) rotate(3deg) scale(1,1);animation-timing-function:cubic-bezier(.5,0,1,.5)}
+  68% {transform:translateY(0) rotate(0) scale(1.1,.85);animation-timing-function:cubic-bezier(0,.5,.5,1)}
+  78% {transform:translateY(-16%) rotate(-1.5deg) scale(.98,1.03);animation-timing-function:cubic-bezier(.5,0,1,.5)}
+  87% {transform:translateY(0) scale(1.04,.95);animation-timing-function:cubic-bezier(0,.5,.5,1)}
+  93% {transform:translateY(-4%) scale(1,1)}
+  100%{opacity:1;transform:none}
+}
+@keyframes introFade{from{opacity:0}to{opacity:1}}
+@keyframes introBar{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@media (prefers-reduced-motion:reduce){
+  .intro-logo img,.intro-slogan{opacity:1!important;transform:none!important;animation:none!important}
+  .intro-active .intro{transition:opacity .4s!important}
+  .intro.done{transform:none;opacity:0;pointer-events:none}
+}

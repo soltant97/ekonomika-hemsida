@@ -17,6 +17,30 @@
   }
 
 
+  /* intro på startsidan – visas en gång per besök (session) */
+  (function () {
+    var intro = document.getElementById('intro');
+    var root = document.documentElement;
+    if (!intro) { return; }
+    if (!root.classList.contains('intro-active')) { intro.parentNode.removeChild(intro); return; }
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var timer;
+    function finish() {
+      clearTimeout(timer);
+      try { sessionStorage.setItem('ekIntro', '1'); } catch (e) {}
+      intro.classList.add('done');
+      root.classList.add('intro-out');
+      setTimeout(function () {
+        if (intro.parentNode) { intro.parentNode.removeChild(intro); }
+        root.classList.remove('intro-active', 'intro-out');
+      }, 1000);
+    }
+    var skip = intro.querySelector('.intro-skip');
+    if (skip) { skip.addEventListener('click', finish); }
+    intro.classList.add('play');
+    timer = setTimeout(finish, reduce ? 1200 : 6200);
+  })();
+
   /* fade-in on load and scroll */
   (function () {
     if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) { return; }
