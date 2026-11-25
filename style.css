@@ -401,8 +401,8 @@ html.modal-open{overflow:hidden}
 @media (max-width:860px){
   .hero{display:none}
   .hero + .band{display:none}
-  .intro-active .site-header .brand > img{opacity:0}
 }
+.intro-active .site-header .brand > img{opacity:0}
 .intro-bar,.intro-skip{display:none!important}
 
 /* Paketkort: lyfts, får grön ram och tydlig skugga när man pekar på dem */

@@ -63,9 +63,9 @@
         return;
       }
 
-      /* mobil: symbolen rullar upp till sidhuvudets logga, sedan kommer bokstäverna en och en */
+      /* symbolen rullar upp till sidhuvudets logga, sedan kommer bokstäverna en och en (dator och mobil) */
       var brandImg = document.querySelector('.site-header .brand img');
-      if (window.matchMedia('(max-width: 860px)').matches && brandImg && flyer && flyer.animate) {
+      if (brandImg && flyer && flyer.animate) {
         root.classList.add('intro-handoff');
         var mLetters = Array.prototype.slice.call(intro.querySelectorAll('.intro-ltr'));
         flyer.getAnimations && flyer.getAnimations().forEach(function (an) { an.finish(); });
@@ -129,10 +129,8 @@
           brand.appendChild(layer);
           flyer.style.visibility = 'hidden';
           intro.style.background = 'transparent';
-          last.onfinish = function () {
-            if (heroArt) { heroArt.style.animation = 'none'; heroArt.classList.add('landed'); }
-            cleanup();
-          };
+          /* när loggan är på plats rullar startsidans stora symbol in som vanligt */
+          last.onfinish = cleanup;
         };
         return;
       }
