@@ -37,11 +37,9 @@
     function land() {
       if (heroArt) {
         heroArt.style.animation = 'none';           /* hero-symbolens egen inrullning behövs inte – den har redan landat */
-        heroArt.classList.add('landed');            /* visas direkt under den landade symbolen … */
+        heroArt.classList.add('landed');            /* identisk med kopian som just landat ovanpå – bytet syns inte */
       }
-      if (flyer && flyer.animate) {                 /* … som sedan tonas bort ovanpå, utan hopp */
-        flyer.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 450, easing: 'ease-out', fill: 'forwards' }).onfinish = cleanup;
-      } else { cleanup(); }
+      requestAnimationFrame(function () { requestAnimationFrame(cleanup); });
     }
     /* hero-symbolens synliga yta på skärmen (inte hela svg-rutan) */
     function drawnRect(svg) {
@@ -95,13 +93,45 @@
       var s = (b.width / a.width + b.height / a.height) / 2;
       flyer.style.transformOrigin = '50% 50%';
       flyer.style.zIndex = '2';
-      /* symbolen tar sats, rullar åt höger och landar på hero-symbolens plats */
-      var fly = flyer.animate([
-        { transform: 'translate(0,0) rotate(0) scale(1)', offset: 0 },
-        { transform: 'translate(-18px,0) rotate(-10deg) scale(1)', offset: .16 },
-        { transform: 'translate(' + dx * .7 + 'px,' + dy * .25 + 'px) rotate(250deg) scale(' + (1 + (s - 1) * .6) + ')', offset: .7 },
-        { transform: 'translate(' + dx + 'px,' + dy + 'px) rotate(360deg) scale(' + s + ')', offset: 1 }
-      ], { duration: 1300, delay: 580, easing: 'cubic-bezier(.5,0,.2,1)', fill: 'forwards' });
+
+      /* Rörelsen: tar sats, rullar åt höger och landar på hero-symbolens plats.
+         [andel av tiden, x, y, vridning, skala] för den platta symbolen. */
+      var path = [
+        [0, 0, 0, 0, 1],
+        [.16, -18, 0, -10, 1],
+        [.7, dx * .7, dy * .25, 250, 1 + (s - 1) * .6],
+        [1, dx, dy, 360, s]
+      ];
+      var timing = { duration: 1300, delay: 580, easing: 'cubic-bezier(.5,0,.2,1)', fill: 'forwards' };
+      function frames(offX, offY, div) {
+        return path.map(function (p) {
+          return { offset: p[0], transform: 'translate(' + (p[1] - offX) + 'px,' + (p[2] - offY) + 'px) rotate(' + p[3] + 'deg) scale(' + (p[4] / div) + ')' };
+        });
+      }
+
+      /* En kopia av hero-symbolen följer med i samma rörelse. Under resan tonas den platta
+         loggan över i hero-symbolens färger, så att den landar redan i rätt färg – inget skimmer. */
+      var ghost = target.cloneNode(true);
+      ghost.removeAttribute('class');
+      ghost.classList.add('intro-ghost');
+      Array.prototype.forEach.call(ghost.querySelectorAll('[id]'), function (el) {
+        var id = el.id, nid = id + '-intro';
+        el.id = nid;
+        Array.prototype.forEach.call(ghost.querySelectorAll('[fill="url(#' + id + ')"],[stroke="url(#' + id + ')"]'), function (u) {
+          if (u.getAttribute('fill') === 'url(#' + id + ')') { u.setAttribute('fill', 'url(#' + nid + ')'); }
+          if (u.getAttribute('stroke') === 'url(#' + id + ')') { u.setAttribute('stroke', 'url(#' + nid + ')'); }
+        });
+      });
+      var t = target.getBoundingClientRect();
+      ghost.style.cssText = 'position:absolute;margin:0;left:' + t.left + 'px;top:' + t.top + 'px;width:' + t.width + 'px;height:' + t.height +
+        'px;transform-origin:' + (b.left + b.width / 2 - t.left) + 'px ' + (b.top + b.height / 2 - t.top) + 'px;opacity:0;z-index:3;pointer-events:none;overflow:visible;filter:' + getComputedStyle(target).filter;
+      intro.appendChild(ghost);
+
+      var fly = flyer.animate(frames(0, 0, 1), timing);
+      ghost.animate(frames(dx, dy, s), timing);
+      var fade = { duration: 1300, delay: 580, fill: 'forwards' };
+      flyer.animate([{ opacity: 1, offset: 0 }, { opacity: 1, offset: .3 }, { opacity: 0, offset: .8 }, { opacity: 0, offset: 1 }], fade);
+      ghost.animate([{ opacity: 0, offset: 0 }, { opacity: 0, offset: .3 }, { opacity: 1, offset: .8 }, { opacity: 1, offset: 1 }], fade);
       fly.onfinish = land;
     }
     var skip = intro.querySelector('.intro-skip');

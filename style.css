@@ -313,7 +313,8 @@ html.modal-open{overflow:hidden}
 .intro-active .hero-art{animation:none;opacity:0}
 .intro-active .hero-art.landed{opacity:1}
 .intro-active .hero-art .sym,.intro-active .hero-art .sym *{animation-play-state:paused!important}
-.intro-active .hero-art .sym .row{animation:none!important}
+.intro-active .hero-art .sym .row,.intro-active .hero-art .sym stop{animation:none!important}
+.intro-ghost,.intro-ghost *{animation:none!important}
 .intro.done{transform:translateY(-100%)}
 .intro-stack{display:flex;flex-direction:column;align-items:center}
 .intro-logo{position:relative;aspect-ratio:1928/390;width:min(84vw,640px)}
