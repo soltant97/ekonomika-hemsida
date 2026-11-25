@@ -28,18 +28,18 @@
     var heroArt = document.querySelector('.hero-art');
     var target = heroArt && heroArt.querySelector('.sym');
     var flyer = intro.querySelector('.intro-sym');
-    var timer, finished = false;
+    var timer, finished = false, heroAnims = [];
 
     function cleanup() {
       if (intro.parentNode) { intro.parentNode.removeChild(intro); }
       root.classList.remove('intro-active', 'intro-out', 'intro-handoff');
     }
     function land() {
-      if (heroArt) {
-        heroArt.style.animation = 'none';           /* hero-symbolens egen inrullning behövs inte – den har redan landat */
-        heroArt.classList.add('landed');            /* identisk med kopian som just landat ovanpå – bytet syns inte */
-      }
-      requestAnimationFrame(function () { requestAnimationFrame(cleanup); });
+      if (heroArt) { heroArt.style.animation = 'none'; heroArt.classList.add('landed'); }
+      cleanup();
+      /* släpp flyg-animationen (symbolen står redan exakt på sin plats) och lämna tillbaka z-index */
+      heroAnims.forEach(function (a) { a.cancel(); });
+      if (heroArt) { heroArt.style.zIndex = ''; }
     }
     /* hero-symbolens synliga yta på skärmen (inte hela svg-rutan) */
     function drawnRect(svg) {
@@ -102,36 +102,32 @@
         [.7, dx * .7, dy * .25, 250, 1 + (s - 1) * .6],
         [1, dx, dy, 360, s]
       ];
-      var timing = { duration: 1300, delay: 580, easing: 'cubic-bezier(.5,0,.2,1)', fill: 'forwards' };
+      var timing = { duration: 1300, delay: 580, easing: 'cubic-bezier(.5,0,.2,1)', fill: 'both' };
       function frames(offX, offY, div) {
         return path.map(function (p) {
           return { offset: p[0], transform: 'translate(' + (p[1] - offX) + 'px,' + (p[2] - offY) + 'px) rotate(' + p[3] + 'deg) scale(' + (p[4] / div) + ')' };
         });
       }
 
-      /* En kopia av hero-symbolen följer med i samma rörelse. Under resan tonas den platta
-         loggan över i hero-symbolens färger, så att den landar redan i rätt färg – inget skimmer. */
-      var ghost = target.cloneNode(true);
-      ghost.removeAttribute('class');
-      ghost.classList.add('intro-ghost');
-      Array.prototype.forEach.call(ghost.querySelectorAll('[id]'), function (el) {
-        var id = el.id, nid = id + '-intro';
-        el.id = nid;
-        Array.prototype.forEach.call(ghost.querySelectorAll('[fill="url(#' + id + ')"],[stroke="url(#' + id + ')"]'), function (u) {
-          if (u.getAttribute('fill') === 'url(#' + id + ')') { u.setAttribute('fill', 'url(#' + nid + ')'); }
-          if (u.getAttribute('stroke') === 'url(#' + id + ')') { u.setAttribute('stroke', 'url(#' + nid + ')'); }
-        });
-      });
-      var t = target.getBoundingClientRect();
-      ghost.style.cssText = 'position:absolute;margin:0;left:' + t.left + 'px;top:' + t.top + 'px;width:' + t.width + 'px;height:' + t.height +
-        'px;transform-origin:' + (b.left + b.width / 2 - t.left) + 'px ' + (b.top + b.height / 2 - t.top) + 'px;opacity:0;z-index:3;pointer-events:none;overflow:visible;filter:' + getComputedStyle(target).filter;
-      intro.appendChild(ghost);
+      /* Den platta symbolen ritas i landningsstorlek och skalas ned i början,
+         så att den är skarp under hela resan i stället för att förstoras upp. */
+      var lw = flyer.offsetWidth, lh = flyer.offsetHeight;
+      flyer.style.width = lw * s + 'px';
+      flyer.style.height = lh * s + 'px';
+      flyer.style.left = (flyer.offsetLeft - lw * (s - 1) / 2) + 'px';
+      flyer.style.top = (flyer.offsetTop - lh * (s - 1) / 2) + 'px';
+      var fly = flyer.animate(frames(0, 0, s), timing);
 
-      var fly = flyer.animate(frames(0, 0, 1), timing);
-      ghost.animate(frames(dx, dy, s), timing);
-      var fade = { duration: 1300, delay: 580, fill: 'forwards' };
-      flyer.animate([{ opacity: 1, offset: 0 }, { opacity: 1, offset: .3 }, { opacity: 0, offset: .8 }, { opacity: 0, offset: 1 }], fade);
-      ghost.animate([{ opacity: 0, offset: 0 }, { opacity: 0, offset: .3 }, { opacity: 1, offset: .8 }, { opacity: 1, offset: 1 }], fade);
+      /* Startsidans riktiga symbol flyger med i exakt samma bana – ingen kopia och inget byte vid
+         landningen. Den lyfts ovanför introt och tonas in ovanpå den platta symbolen under resan. */
+      var t = target.getBoundingClientRect();
+      heroArt.style.zIndex = '1001';
+      heroArt.classList.add('landed');
+      target.style.transformOrigin = (b.left + b.width / 2 - t.left) + 'px ' + (b.top + b.height / 2 - t.top) + 'px';
+      heroAnims.push(target.animate(frames(dx, dy, s), timing));
+      var fade = { duration: 1300, delay: 580, fill: 'both' };
+      heroAnims.push(target.animate([{ opacity: 0, offset: 0 }, { opacity: 0, offset: .4 }, { opacity: 1, offset: .72 }, { opacity: 1, offset: 1 }], fade));
+      flyer.animate([{ opacity: 1, offset: 0 }, { opacity: 1, offset: .6 }, { opacity: 0, offset: .9 }, { opacity: 0, offset: 1 }], fade);
       fly.onfinish = land;
     }
     var skip = intro.querySelector('.intro-skip');

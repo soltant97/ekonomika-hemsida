@@ -293,7 +293,7 @@ html.modal-open{overflow:hidden}
 .sym .row{animation-duration:8s;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-delay:3.8s;animation-fill-mode:backwards}
 .sym .r1{animation-name:slideA}
 .sym .r2{animation-name:slideB}
-.sym .r3{animation-name:slideA;animation-delay:-.2s}
+.sym .r3{animation-name:slideA;animation-delay:4.1s}
 .sym .g1{animation:shimL1 6s ease-in-out infinite}
 .sym .g2{animation:shimL2 6s ease-in-out infinite}
 .sym .d2{animation:shimD 6s ease-in-out infinite}
@@ -314,7 +314,6 @@ html.modal-open{overflow:hidden}
 .intro-active .hero-art.landed{opacity:1}
 .intro-active .hero-art .sym,.intro-active .hero-art .sym *{animation-play-state:paused!important}
 .intro-active .hero-art .sym .row,.intro-active .hero-art .sym stop{animation:none!important}
-.intro-ghost,.intro-ghost *{animation:none!important}
 .intro.done{transform:translateY(-100%)}
 .intro-stack{display:flex;flex-direction:column;align-items:center}
 .intro-logo{position:relative;aspect-ratio:1928/390;width:min(84vw,640px)}
