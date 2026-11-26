@@ -432,3 +432,9 @@ html.modal-open{overflow:hidden}
 
 /* Mobil: sloganen får radbrytas */
 @media (max-width:520px){.hero-new .hero-tag{white-space:normal;font-size:16px;margin-top:16px}}
+
+/* Startsidans stora logga rullar in samtidigt som introts symbol rullar upp till hörnet */
+.intro-active.hero-go .hero-art{animation:rollIn 1.7s cubic-bezier(.25,.6,.3,1) both;opacity:1}
+.intro-active.hero-go .hero-ltrs .hl{animation:hlIn .6s cubic-bezier(.3,1.4,.5,1) calc(var(--hd,1.3s) + var(--i) * .08s) forwards}
+.intro-active.hero-go .hero-new .hero-tag{animation:hlTag .8s ease-out var(--td,2s) forwards}
+.hero-go .intro::before{transition-delay:0s;transition-duration:.7s}

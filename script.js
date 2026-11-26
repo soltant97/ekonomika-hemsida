@@ -32,7 +32,7 @@
 
     function cleanup() {
       if (intro.parentNode) { intro.parentNode.removeChild(intro); }
-      root.classList.remove('intro-active', 'intro-out', 'intro-handoff');
+      root.classList.remove('intro-active', 'intro-out', 'intro-handoff', 'hero-go');
     }
     function land() {
       if (heroArt) { heroArt.style.animation = 'none'; heroArt.classList.add('landed'); }
@@ -66,7 +66,7 @@
       /* symbolen rullar upp till sidhuvudets logga, sedan kommer bokstäverna en och en (dator och mobil) */
       var brandImg = document.querySelector('.site-header .brand img');
       if (brandImg && flyer && flyer.animate) {
-        root.classList.add('intro-handoff');
+        root.classList.add('intro-handoff', 'hero-go');   /* startsidans stora logga rullar in samtidigt */
         var mLetters = Array.prototype.slice.call(intro.querySelectorAll('.intro-ltr'));
         flyer.getAnimations && flyer.getAnimations().forEach(function (an) { an.finish(); });
         mLetters.forEach(function (l) {
