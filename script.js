@@ -295,4 +295,29 @@
       }).then(function () { btn.disabled = false; });
     });
   });
+
+  /* "Vad behöver just du?" – flikar */
+  document.querySelectorAll('.sit-tabs').forEach(function (list) {
+    var tabs = Array.prototype.slice.call(list.querySelectorAll('[role=tab]'));
+    function pick(t, focus) {
+      tabs.forEach(function (x) {
+        var on = x === t;
+        x.setAttribute('aria-selected', on); x.tabIndex = on ? 0 : -1;
+        document.getElementById(x.getAttribute('aria-controls')).hidden = !on;
+      });
+      if (focus) { t.focus(); }
+    }
+    tabs.forEach(function (t, i) {
+      t.addEventListener('click', function () { pick(t); });
+      t.addEventListener('keydown', function (e) {
+        var n = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        if (n) { e.preventDefault(); pick(tabs[(i + n + tabs.length) % tabs.length], true); }
+      });
+    });
+  });
+  /* årskalendern: markera innevarande månad */
+  document.querySelectorAll('.yr-hd').forEach(function (hd) {
+    var c = hd.children[new Date().getMonth() + 1];
+    if (c) { c.classList.add('now'); c.setAttribute('aria-current', 'date'); }
+  });
 })();

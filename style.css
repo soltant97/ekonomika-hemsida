@@ -444,3 +444,57 @@ html.modal-open{overflow:hidden}
 .intro-active.hero-go .hero-ltrs .hl{animation:hlIn .6s cubic-bezier(.3,1.4,.5,1) calc(var(--hd,1.3s) + var(--i) * .08s) forwards}
 .intro-active.hero-go .hero-new .hero-tag{animation:hlTag .8s ease-out var(--td,2s) forwards}
 .hero-go .intro::before{transition-delay:0s;transition-duration:.7s}
+
+/* ---------- Tjänster: stor typografi (startsidan) ---------- */
+.big{list-style:none;margin:18px 0 0;padding:0;border-top:2px solid var(--ink)}
+.big a{position:relative;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:12px 0;border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink);overflow:hidden}
+.big a::before{content:"";position:absolute;inset:0 -40px;background:var(--green);transform:translateX(-110%) skewX(-20deg);transition:transform .45s cubic-bezier(.7,0,.2,1)}
+.bw{position:relative;font-size:clamp(34px,5.6vw,72px);font-weight:800;letter-spacing:-.03em;line-height:1.12;transition:color .3s,transform .45s cubic-bezier(.7,0,.2,1)}
+.bd{position:relative;color:#fff;font-size:16px;max-width:300px;margin-right:18px;text-align:right;opacity:0;transform:translateX(20px);transition:opacity .35s .1s,transform .35s .1s}
+.big a:focus-visible{outline-offset:-3px}
+@media (hover:hover){.big a:hover::before{transform:translateX(0) skewX(-20deg)}.big a:hover .bw{color:#fff;transform:translateX(18px)}.big a:hover .bd{opacity:1;transform:none}}
+@media (hover:none),(max-width:760px){.big a{display:block;padding:14px 0}.bd{display:block;color:var(--muted);text-align:left;opacity:1;transform:none;max-width:none;font-size:15px;margin-top:2px}}
+.big-more{margin-top:28px}
+/* ---------- Tjänster: vad behöver just du? ---------- */
+.sit-sec{padding-top:0}
+.sit{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.6fr);gap:56px;align-items:start}.sit h2{margin:6px 0 10px}.sit p{color:var(--muted)}
+.sit-box{padding:10px}
+.sit-tabs{display:flex;flex-wrap:wrap;gap:6px;background:var(--bg);border-radius:16px;padding:6px}
+.sit-tabs button{flex:1 1 auto;font:inherit;font-weight:700;font-size:15px;border:0;background:transparent;color:var(--muted);padding:10px 14px;border-radius:12px;cursor:pointer;min-height:44px;transition:background .2s,color .2s,box-shadow .2s}
+.sit-tabs button:hover{color:var(--green)}
+.sit-tabs button[aria-selected=true]{background:#fff;color:var(--green);box-shadow:0 2px 10px rgba(30,58,45,.12)}
+.sit-p{padding:22px 18px 10px}.sit-p ul{list-style:none;margin:0;padding:0;columns:2;column-gap:28px}
+.sit-p li{break-inside:avoid;padding:9px 0 9px 26px;position:relative;font-weight:600;color:var(--ink)}
+.sit-p li::before{content:"";position:absolute;left:0;top:16px;width:14px;height:8px;background:var(--acc);transform:skewX(-30deg)}
+.sit-p .sit-pk{margin:18px 0 0;padding-top:16px;border-top:1px solid var(--line);color:var(--muted)}.sit-pk b{color:var(--ink)}.sit-pk a{color:var(--green);font-weight:700;margin-left:8px}
+@media (max-width:860px){.sit{grid-template-columns:1fr;gap:20px}.sit-p ul{columns:1}.sit-tabs button{flex:1 1 45%;font-size:14px}}
+/* ---------- Tjänster: ett år med Ekonomika (tjänstesidan) ---------- */
+.v-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px 40px;margin-bottom:34px}.v-head h2{margin:6px 0 0}.v-head p{color:var(--muted);margin:0;max-width:400px}
+.yr-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.yr{min-width:900px;border-top:2px solid var(--ink)}
+.yr-row{display:grid;grid-template-columns:250px repeat(12,1fr);align-items:center;min-height:64px;border-bottom:1px solid var(--line);transition:background .2s}
+.yr-row:not(.yr-hd)::before{content:"";grid-column:2/-1;grid-row:1;align-self:stretch;background:repeating-linear-gradient(90deg,transparent 0 calc(100% / 12 - 1px),#e3e8e3 calc(100% / 12 - 1px) calc(100% / 12))}
+.yr-hd{min-height:42px}.yr-hd span{font-size:13px;font-weight:700;color:var(--muted);text-align:center;text-transform:uppercase;letter-spacing:.06em}
+.yr-hd .now{color:#fff;background:var(--green);border-radius:999px;padding:3px 0;margin:0 6px}
+.yr-n{grid-column:1;grid-row:1;padding:12px 16px 12px 0;position:sticky;left:0;background:inherit;z-index:1}.yr-n b{display:block;font-size:16px;color:var(--ink)}.yr-n small{display:block;color:var(--muted);font-size:13px;line-height:1.4;max-height:0;overflow:hidden;transition:max-height .3s}
+.yr-row i{grid-row:1;grid-column:var(--s)/var(--e);justify-self:center;align-self:center}
+.yr-row .seg{justify-self:stretch;height:14px;margin:0 6px;transform:skewX(-30deg);border-radius:2px}
+.seg.bar{background:var(--acc)}.seg.bar2,.seg.blk{background:var(--green)}
+.yr-row .dot{width:12px;height:12px;background:var(--acc);transform:skewX(-30deg)}
+.yr-row .pin{width:16px;height:16px;border:3px solid var(--green);background:#fff;transform:rotate(45deg)}
+.yr-row:not(.yr-hd){background:var(--bg)}
+.yr-row:not(.yr-hd):hover{background:#fff}.yr-row:hover .yr-n small{max-height:60px}
+@media (hover:none){.yr-n small{max-height:none}}
+@media (max-width:760px){
+  .yr{min-width:0}
+  .yr-row{grid-template-columns:repeat(12,1fr);min-height:0;padding-bottom:14px}
+  .yr-hd{position:sticky;top:72px;z-index:2;background:var(--bg);padding:6px 0}
+  .yr-hd span:first-child{display:none}
+  .yr-hd span{font-size:11px;letter-spacing:0}.yr-hd .now{margin:0 1px}
+  .yr-n{grid-column:1/-1;grid-row:1;position:static;padding:14px 0 10px}.yr-n small{max-height:none}
+  .yr-row:not(.yr-hd)::before{grid-column:1/-1;grid-row:2;height:22px}
+  .yr-row i{grid-row:2;grid-column:var(--ms)/var(--me)}
+  .yr-row .seg{height:10px;margin:0 3px}.yr-row .dot{width:9px;height:9px}.yr-row .pin{width:12px;height:12px;border-width:2px}
+}
+.yr-note{display:flex;flex-wrap:wrap;align-items:center;gap:8px;color:var(--muted);font-size:14px;margin-top:16px}
+.k{display:inline-block;width:16px;height:10px;transform:skewX(-30deg);margin-left:10px}.k:first-child{margin-left:0}.k-bar{background:var(--acc)}.k-dot{width:10px;background:var(--acc)}.k-pin{width:10px;height:10px;border:2px solid var(--green);transform:rotate(45deg)}
