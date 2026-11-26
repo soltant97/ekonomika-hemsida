@@ -263,26 +263,36 @@
     });
   }
 
-  document.querySelectorAll('form[data-mailto]').forEach(function (form) {
+  /* kontaktformuläret skickas via Formspree (sätt formulärets id i data-formspree) */
+  document.querySelectorAll('form[data-formspree]').forEach(function (form) {
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var msg = form.querySelector('.form-msg');
       var d = form.dataset;
+      var btn = form.querySelector('button[type=submit]');
       var name = form.elements['name'].value.trim();
       var email = form.elements['email'].value.trim();
       var message = form.elements['message'] ? form.elements['message'].value.trim() : '';
       var needs = Array.prototype.map.call(form.querySelectorAll('input[name=need]:checked'), function (i) { return i.value; });
-      var to = d.mailto;
       function show(text) { msg.textContent = text; msg.classList.add('show'); }
       if (!name || !/^\S+@\S+\.\S+$/.test(email)) {
         show(d.invalid);
         (!name ? form.elements['name'] : form.elements['email']).focus();
         return;
       }
-      var subject = d.subject + ' ' + name;
-      var body = d.lblName + ': ' + name + '\n' + d.lblEmail + ': ' + email + '\n' + d.lblNeed + ': ' + (needs.join(', ') || '-') + (message ? '\n\n' + message : '');
-      show(d.ok.replace('{e}', to));
-      window.location.href = 'mailto:' + to + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+      if (!d.formspree) { show(d.err.replace('{e}', d.email)); return; }
+      btn.disabled = true;
+      fetch('https://formspree.io/f/' + d.formspree, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ _subject: d.subject + ' ' + name, name: name, email: email, _replyto: email, need: needs.join(', ') || '-', message: message })
+      }).then(function (r) {
+        if (!r.ok) { throw new Error(r.status); }
+        form.reset();
+        show(d.ok);
+      }).catch(function () {
+        show(d.err.replace('{e}', d.email));
+      }).then(function () { btn.disabled = false; });
     });
   });
 })();

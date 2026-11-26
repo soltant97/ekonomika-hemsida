@@ -399,7 +399,7 @@ html.modal-open{overflow:hidden}
 @media (max-width:360px){.nav-toggle{padding:0 12px 0 14px}.lang-m a{min-width:32px}}
 /* Mobil: ingen hero – introts logga landar i sidhuvudets logga */
 @media (max-width:860px){
-  .hero{display:none}
+  .hero{padding:36px 0 44px}
   .hero + .band{display:none}
 }
 .intro-active .site-header .brand > img{opacity:0}
@@ -429,3 +429,6 @@ html.modal-open{overflow:hidden}
 .prow .btn{min-height:44px;padding:0 22px}
 @media (hover:hover){.prow:hover{background:var(--mint)}}
 @media (max-width:760px){.prow{grid-template-columns:1fr auto;gap:10px 16px;padding:18px 20px}.pdots{display:none}.prow .btn{grid-column:1/-1;width:100%}}
+
+/* Mobil: sloganen får radbrytas */
+@media (max-width:520px){.hero-new .hero-tag{white-space:normal;font-size:16px;margin-top:16px}}

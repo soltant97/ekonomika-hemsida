@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://soltant97.github.io/ekonomika-hemsida/sitemap.xml
