@@ -1,3 +1,9 @@
+/* Typsnitt: Plus Jakarta Sans, lagrat på webbplatsen (SIL Open Font License) */
+@font-face{font-family:'Plus Jakarta Sans';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/pjs-400.woff2') format('woff2')}
+@font-face{font-family:'Plus Jakarta Sans';font-style:normal;font-weight:500;font-display:swap;src:url('fonts/pjs-500.woff2') format('woff2')}
+@font-face{font-family:'Plus Jakarta Sans';font-style:normal;font-weight:600;font-display:swap;src:url('fonts/pjs-600.woff2') format('woff2')}
+@font-face{font-family:'Plus Jakarta Sans';font-style:normal;font-weight:700;font-display:swap;src:url('fonts/pjs-700.woff2') format('woff2')}
+@font-face{font-family:'Plus Jakarta Sans';font-style:normal;font-weight:800;font-display:swap;src:url('fonts/pjs-800.woff2') format('woff2')}
 
 :root{
   --green:#2F5A45; --green-d:#25382E; --acc:#6CBF6C; --acc-d:#10241A;
