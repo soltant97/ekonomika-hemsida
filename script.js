@@ -355,7 +355,7 @@
     ps.forEach(function(p,k){p.classList.toggle('on',k===i);p.classList.toggle('past',k<i);p.setAttribute('aria-hidden',k!==i);
       var ill=p.querySelector('.st-ill');if(k===i){ill.classList.remove('drawn');void ill.offsetWidth;ill.classList.add('drawn')}});
     ds.forEach(function(d,k){d.classList.toggle('on',k===i)});
-    busy=true;clearTimeout(timer);timer=setTimeout(function(){busy=false;acc=0;needGap=true},dur[i])}
+    busy=true;clearTimeout(timer);timer=setTimeout(function(){busy=false},dur[i])}
   function off(){return steps.getBoundingClientRect().top}
   function pin(){scrollTo({top:scrollY+off(),behavior:'instant'})}
   /* sektionen fyller skärmen */
@@ -369,28 +369,31 @@
       if(dir>0&&t>-vh*.15&&t<vh*.65){pin();return true}          /* på väg in uppifrån */
       if(dir<0&&t<vh*.15&&t>-vh*.65){pin();return true}          /* på väg in nerifrån */
       return false}
-    if(busy)return true;                                        /* teckningen ritas */
     if((dir>0&&cur>=n-1)||(dir<0&&cur<=0)){left=dir;return false} /* lämna sektionen */
     left=0;
     show(cur+dir);return true}
+  /* ett svep eller en scrollrörelse = ett steg; man kan bläddra vidare innan teckningen är klar */
+  var used=false,lastStep=0,lastDir=0;
   addEventListener('wheel',function(e){
     var d=e.deltaMode===1?e.deltaY*16:e.deltaY;if(!d)return;
     var dir=d>0?1:-1,now=Date.now(),gap=now-lastW;lastW=now;
-    if(needGap){if(gap>220)needGap=false;else if(locked()){e.preventDefault();return}}   /* samma svep som förut: vänta på nytt */
-    if(!locked()){if(step(dir))e.preventDefault();return}
-    if(busy){e.preventDefault();return}
-    if(now-accT>250||(acc>0)!==(d>0))acc=0;accT=now;acc+=d;
-    if(Math.abs(acc)<30){if(!((dir>0&&cur>=n-1)||(dir<0&&cur<=0)))e.preventDefault();return}
-    acc=0;if(step(dir))e.preventDefault();
+    if(gap>160||dir!==lastDir){used=false;acc=0}lastDir=dir;               /* ny rörelse */
+    if(!locked()){if(step(dir)){e.preventDefault();used=true;lastStep=now}return}
+    var edge=(dir>0&&cur>=n-1)||(dir<0&&cur<=0);
+    if(used||now-lastStep<450){e.preventDefault();return}
+    acc+=d;
+    if(Math.abs(acc)<30){if(!edge)e.preventDefault();return}
+    acc=0;used=true;
+    if(step(dir)){e.preventDefault();lastStep=now}
   },{passive:false});
-  var ty=null,used=false,free=false;
-  addEventListener('touchstart',function(e){ty=e.touches[0].clientY;used=false;free=false},{passive:true});
+  var ty=null,tused=false,free=false;
+  addEventListener('touchstart',function(e){ty=e.touches[0].clientY;tused=false;free=false},{passive:true});
   addEventListener('touchmove',function(e){
     if(ty===null||free)return;
-    if(used){e.preventDefault();return}
+    if(tused){e.preventDefault();return}
     var dy=ty-e.touches[0].clientY;
     if(Math.abs(dy)<24){if(locked())e.preventDefault();return}
-    if(step(dy>0?1:-1)){e.preventDefault();used=true}else free=true;
+    if(step(dy>0?1:-1)){e.preventDefault();tused=true}else free=true;
   },{passive:false});
   addEventListener('touchend',function(){ty=null},{passive:true});
   addEventListener('keydown',function(e){
