@@ -343,3 +343,59 @@
     });
   });
 })();
+
+/* Vad vi gör, steg för steg */
+(function(){
+  var steps=document.querySelector('.steps');if(!steps)return;var ps=[].slice.call(document.querySelectorAll('.sp')),ds=[].slice.call(document.querySelectorAll('.sd'));
+  var n=ps.length,cur=0,busy=false,timer,acc=0,accT=0,lastW=0,needGap=false,left=0;
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){ps.forEach(function(p){p.querySelector('.st-ill').classList.add('drawn')});return}
+  var dur=ps.map(function(p){var m=0;p.querySelectorAll('[style*="--d"]').forEach(function(e){m=Math.max(m,parseFloat(e.style.getPropertyValue('--d'))||0)});return (m+.7)*1000});
+  function show(i){
+    i=Math.max(0,Math.min(n-1,i));cur=i;
+    ps.forEach(function(p,k){p.classList.toggle('on',k===i);p.classList.toggle('past',k<i);p.setAttribute('aria-hidden',k!==i);
+      var ill=p.querySelector('.st-ill');if(k===i){ill.classList.remove('drawn');void ill.offsetWidth;ill.classList.add('drawn')}});
+    ds.forEach(function(d,k){d.classList.toggle('on',k===i)});
+    busy=true;clearTimeout(timer);timer=setTimeout(function(){busy=false;acc=0;needGap=true},dur[i])}
+  function off(){return steps.getBoundingClientRect().top}
+  function pin(){scrollTo({top:scrollY+off(),behavior:'instant'})}
+  /* sektionen fyller skärmen */
+  function locked(){return Math.abs(off())<4}
+  /* ska denna rörelse stanna i stegen? (annars scrollar sidan) */
+  function step(dir){
+    var t=off(),vh=innerHeight;
+    if(Math.abs(t)>vh*.65)left=0;
+    if(!locked()){
+      if(dir===left)return false;                                /* nyss lämnat åt det hållet */
+      if(dir>0&&t>-vh*.15&&t<vh*.65){pin();return true}          /* på väg in uppifrån */
+      if(dir<0&&t<vh*.15&&t>-vh*.65){pin();return true}          /* på väg in nerifrån */
+      return false}
+    if(busy)return true;                                        /* teckningen ritas */
+    if((dir>0&&cur>=n-1)||(dir<0&&cur<=0)){left=dir;return false} /* lämna sektionen */
+    left=0;
+    show(cur+dir);return true}
+  addEventListener('wheel',function(e){
+    var d=e.deltaMode===1?e.deltaY*16:e.deltaY;if(!d)return;
+    var dir=d>0?1:-1,now=Date.now(),gap=now-lastW;lastW=now;
+    if(needGap){if(gap>220)needGap=false;else if(locked()){e.preventDefault();return}}   /* samma svep som förut: vänta på nytt */
+    if(!locked()){if(step(dir))e.preventDefault();return}
+    if(busy){e.preventDefault();return}
+    if(now-accT>250||(acc>0)!==(d>0))acc=0;accT=now;acc+=d;
+    if(Math.abs(acc)<30){if(!((dir>0&&cur>=n-1)||(dir<0&&cur<=0)))e.preventDefault();return}
+    acc=0;if(step(dir))e.preventDefault();
+  },{passive:false});
+  var ty=null,used=false,free=false;
+  addEventListener('touchstart',function(e){ty=e.touches[0].clientY;used=false;free=false},{passive:true});
+  addEventListener('touchmove',function(e){
+    if(ty===null||free)return;
+    if(used){e.preventDefault();return}
+    var dy=ty-e.touches[0].clientY;
+    if(Math.abs(dy)<24){if(locked())e.preventDefault();return}
+    if(step(dy>0?1:-1)){e.preventDefault();used=true}else free=true;
+  },{passive:false});
+  addEventListener('touchend',function(){ty=null},{passive:true});
+  addEventListener('keydown',function(e){
+    var k=e.key,dir=(k==='ArrowDown'||k==='PageDown'||(k===' '&&!e.shiftKey))?1:(k==='ArrowUp'||k==='PageUp'||(k===' '&&e.shiftKey))?-1:0;
+    if(dir&&step(dir))e.preventDefault()});
+  ds.forEach(function(d,k){d.addEventListener('click',function(){pin();busy=false;show(k)})});
+  show(0);
+})();

@@ -524,3 +524,32 @@ html.modal-open{overflow:hidden}
 .vd-note{color:var(--muted);font-size:14px;margin-top:18px;max-width:780px}
 @media (max-width:760px){.vd-every,.vd-m{grid-template-columns:1fr;gap:6px}.vd-m li{grid-template-columns:1fr auto;padding:10px 0}.vd-x{grid-column:1/-1;grid-row:2}.vd-ev-h{display:flex;align-items:baseline;justify-content:space-between}}
 .vd-every[hidden]{display:none}
+
+/* Vad vi gör, steg för steg */
+.steps{position:relative;height:100vh;height:100svh;background-color:var(--bg);background-image:repeating-linear-gradient(90deg,rgba(30,58,45,.035) 0 1px,transparent 1px 7px)}
+.stage{position:relative;height:100%;overflow:hidden}
+.sp{position:absolute;inset:0;display:flex;align-items:center;padding-top:70px;opacity:0;transform:translateY(60px);transition:opacity .5s ease,transform .6s cubic-bezier(.2,.7,.2,1);pointer-events:none}
+.sp.on{opacity:1;transform:none;pointer-events:auto}
+.sp.past{opacity:0;transform:translateY(-60px)}
+.sp .wrap{width:100%}
+.st-p{text-align:center;color:var(--muted);max-width:520px;margin:0 auto 6px;font-size:17px}
+.st-ill{max-width:min(680px,calc((100vh - 330px) * 1.36));margin:0 auto}
+.ill{display:block;width:100%;height:auto;overflow:visible}
+.ill text{font-family:'Plus Jakarta Sans',system-ui,sans-serif}
+.ill .ln{stroke-dasharray:1;stroke-dashoffset:1}.ill .tx{opacity:0}
+.drawn .ill .ln{animation:draw .5s ease-out var(--d) forwards}.drawn .ill .hl{animation-duration:.7s}
+.drawn .ill .tx{animation:txin .4s ease-out var(--d) forwards}
+@keyframes draw{to{stroke-dashoffset:0}}@keyframes txin{to{opacity:1}}
+.sdots{position:absolute;right:max(20px,calc((100vw - 1180px) / 2 - 40px));top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:12px}
+.sd{width:12px;height:12px;border:2px solid var(--green);background:transparent;transform:skewX(-20deg);padding:0;cursor:pointer;transition:background .3s,height .3s}
+.sd.on{background:var(--green);height:28px}
+@media (max-width:760px){.sdots{right:auto;left:50%;top:auto;bottom:28px;transform:translateX(-50%);flex-direction:row}.sd.on{height:12px;width:28px}.sp{padding-top:64px}.st-p{font-size:15px}.st-ill{max-width:100%}}
+@media (prefers-reduced-motion:reduce){.steps{height:auto}.stage{position:static;height:auto;overflow:visible}.sp{position:static;opacity:1;transform:none;padding:60px 0}.ill .ln{stroke-dashoffset:0}.ill .tx{opacity:1}.sdots{display:none}}
+.st-title{position:absolute;left:0;right:0;top:104px;text-align:center;font-size:clamp(26px,3vw,38px);letter-spacing:-.02em;margin:0;z-index:2;padding:0 20px}
+.sp{padding-top:140px}
+.sp h3{text-align:center;font-size:clamp(22px,2.4vw,30px);color:var(--green);margin:0 auto 8px;letter-spacing:-.01em}
+.st-ill{max-width:min(640px,calc((100vh - 400px) * 1.36))}
+@media (max-width:760px){.st-title{top:92px}.sp{align-items:flex-start;padding-top:170px;padding-bottom:60px}.st-ill{max-width:min(100%,calc((100vh - 400px) * 1.36))}}
+@media (prefers-reduced-motion:reduce){.st-title{position:static;padding-top:60px}.sp{padding-top:30px}}
+.steps{padding:0}
+@media (min-width:761px){.st-title{top:122px}}
