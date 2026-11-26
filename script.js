@@ -320,4 +320,26 @@
     var c = hd.children[new Date().getMonth() + 1];
     if (c) { c.classList.add('now'); c.setAttribute('aria-current', 'date'); }
   });
+
+  /* viktiga datum: filter och innevarande månad */
+  document.querySelectorAll('.vd-sec').forEach(function (sec) {
+    var m = new Date().getMonth() + 1;
+    sec.querySelectorAll('.vd-m').forEach(function (el) { if (+el.dataset.m === m) { el.classList.add('is-now'); } });
+    var btns = sec.querySelectorAll('.vd-f'), every = sec.querySelector('.vd-every');
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        var f = b.dataset.f;
+        btns.forEach(function (x) { x.setAttribute('aria-pressed', x === b); });
+        sec.querySelectorAll('.vd-m').forEach(function (month) {
+          var any = false;
+          month.querySelectorAll('li').forEach(function (li) {
+            var show = f === 'all' || li.dataset.t.split(' ').indexOf(f) > -1;
+            li.hidden = !show; if (show) { any = true; }
+          });
+          month.hidden = !any;
+        });
+        if (every) { every.hidden = f === 'pr'; }
+      });
+    });
+  });
 })();

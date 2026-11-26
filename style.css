@@ -498,3 +498,29 @@ html.modal-open{overflow:hidden}
 }
 .yr-note{display:flex;flex-wrap:wrap;align-items:center;gap:8px;color:var(--muted);font-size:14px;margin-top:16px}
 .k{display:inline-block;width:16px;height:10px;transform:skewX(-30deg);margin-left:10px}.k:first-child{margin-left:0}.k-bar{background:var(--acc)}.k-dot{width:10px;background:var(--acc)}.k-pin{width:10px;height:10px;border:2px solid var(--green);transform:rotate(45deg)}
+
+/* ---------- Viktiga datum (tjänstesidan) ---------- */
+.vd-sec{padding-top:0}
+.vd-filter{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 26px}
+.vd-f{font:inherit;font-size:15px;font-weight:700;min-height:44px;padding:0 18px;border-radius:999px;border:2px solid var(--line);background:transparent;color:var(--muted);cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.vd-f:hover{border-color:var(--green);color:var(--green)}
+.vd-f[aria-pressed=true]{background:var(--green);border-color:var(--green);color:#fff}
+.vd-every{display:grid;grid-template-columns:200px 1fr;gap:8px 32px;align-items:center;padding:22px 26px;border-radius:18px;background:var(--mint);margin-bottom:8px}
+.vd-ev-h b{display:block;font-size:18px;color:var(--ink)}.vd-ev-h span{font-size:30px;font-weight:800;color:var(--green);letter-spacing:-.02em}
+.vd-every p{margin:0;color:var(--ink)}
+.vd-list{list-style:none;margin:0;padding:0;border-top:2px solid var(--ink)}
+.vd-m{display:grid;grid-template-columns:200px 1fr;gap:0 32px;padding:18px 0;border-bottom:1px solid var(--line)}
+.vd-m h3{margin:4px 0 0;font-size:20px;display:flex;align-items:center;gap:10px}
+.vd-now{display:none;font-style:normal;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:var(--green);padding:3px 10px;border-radius:999px}
+.vd-m.is-now .vd-now{display:inline-block}
+.vd-m.is-now h3 span{color:var(--green)}
+.vd-m ul{list-style:none;margin:0;padding:0}
+.vd-m li{display:grid;grid-template-columns:120px 1fr auto;gap:4px 18px;align-items:baseline;padding:8px 0}
+.vd-d{font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums}
+.vd-x{color:var(--muted)}
+.vd-tags{display:flex;gap:6px}
+.vd-tag{font-size:12px;font-weight:800;letter-spacing:.04em;padding:3px 9px;border-radius:999px;background:#fff;border:1px solid var(--line);color:var(--green);white-space:nowrap}
+.vd-m li[hidden],.vd-m[hidden]{display:none}
+.vd-note{color:var(--muted);font-size:14px;margin-top:18px;max-width:780px}
+@media (max-width:760px){.vd-every,.vd-m{grid-template-columns:1fr;gap:6px}.vd-m li{grid-template-columns:1fr auto;padding:10px 0}.vd-x{grid-column:1/-1;grid-row:2}.vd-ev-h{display:flex;align-items:baseline;justify-content:space-between}}
+.vd-every[hidden]{display:none}
