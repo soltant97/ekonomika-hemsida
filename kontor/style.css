@@ -320,3 +320,5 @@ body.focus .bb.me .status{opacity:1}
 .m-tl b{font-variant-numeric:tabular-nums;white-space:nowrap}
 .m-tl span{color:#1d2b24}
 @media(max-width:760px){body.emb #intro img{display:none}body.emb #intro h1{font-size:16px;margin-bottom:4px}body.emb #intro p{display:block;font-size:12.5px}}
+
+body.emb #intro{display:none!important}
