@@ -554,9 +554,8 @@ html.modal-open{overflow:hidden}
 .steps{padding:0}
 @media (min-width:761px){.st-title{top:122px}}
 /* 3D-kontoret på tjänstesidan */
-.office-sec{padding:72px 0}
-.office-frame{border-radius:24px;overflow:hidden;background:#EEF0EA;border:1px solid var(--line);height:min(82vh,760px);min-height:560px}
+.office-sec{padding:72px 0 0}
+.office-sec .v-head{margin-bottom:28px}
+.office-frame{width:100%;height:calc(100vh - 84px);height:calc(100svh - 84px);min-height:600px;background:#EEF0EA;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .office-frame iframe{display:block;width:100%;height:100%;border:0}
-.office-alt{margin:14px 0 0;font-size:15px}
-.office-alt a{color:var(--green);font-weight:600}
-@media(max-width:760px){.office-sec{padding:48px 0}.office-frame{height:78vh;min-height:520px;border-radius:18px}}
+@media(max-width:760px){.office-sec{padding-top:48px}.office-frame{height:calc(100svh - 72px);min-height:540px}}
