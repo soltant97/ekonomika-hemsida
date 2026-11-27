@@ -178,7 +178,7 @@ updScreens();
 const cam=new THREE.OrthographicCamera(-1,1,1,-1,.1,200);
 const C={tx:9,ty:.4,tz:6.6,zoom:7,yaw:.7,pitch:.62,goal:null};
 const G={tx:9,ty:.4,tz:6.6,zoom:7,yaw:.7};
-function overviewZoom(){const asp=innerWidth/innerHeight;const mob=innerWidth<=760;const hw=mob?7.2:12.2;return Math.max(hw/asp,mob?5:7.4)}
+function overviewZoom(){const asp=innerWidth/innerHeight;const mob=innerWidth<=760;const hw=mob?7.2:12.2;return Math.max(hw/asp,mob?5:7.4)*1.3}
 function applyCam(){const asp=innerWidth/innerHeight;const h=C.zoom;cam.left=-h*asp;cam.right=h*asp;cam.top=h;cam.bottom=-h;cam.updateProjectionMatrix();
   const d=new THREE.Vector3(-Math.sin(C.yaw)*Math.cos(C.pitch),Math.sin(C.pitch),Math.cos(C.yaw)*Math.cos(C.pitch));
   /* panelen tar plats till höger: förskjut bilden */
@@ -302,7 +302,7 @@ function addFeed(f){const now=new Date();const li=document.createElement('li');
   li.innerHTML='<span class="dots"><i style="background:'+colorOf(f[0])+'"></i><s></s><i style="background:'+colorOf(f[1])+'"></i></span><span><b>'+nameOf(f[0])+'</b> → '+(f[1]==='hub'?'dig':'<b>'+nameOf(f[1])+'</b>')+'<br>'+f[3]+'</span><time>'+String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0')+'</time>';
   feed.insertBefore(li,feed.firstChild);while(feed.children.length>4)feed.removeChild(feed.lastChild)}
 function arrive(f){addFeed(f);if(f[1]!=='hub'){const b=AG[f[1]];const pg=b.pgEl.firstChild;pg.textContent='+1 '+f[2].toLowerCase();pg.classList.add('show');setTimeout(()=>pg.classList.remove('show'),2400);pulse(f[1])}else pulse('hub');
-  if(f[0]==='re'){verif++;document.getElementById('s1').textContent=(verif-1).toLocaleString('sv-SE')}}
+  if(f[0]==='re'){verif++;const s1=document.getElementById('s1');if(s1)s1.textContent=(verif-1).toLocaleString('sv-SE')}}
 function pulse(k){const m=ROOMFLOOR[k].material;const base=m.color.clone();const hi=new THREE.Color(k==='hub'?'#2F5A45':byId[k].c).lerp(new THREE.Color('#ffffff'),.45);let t=0;const iv=setInterval(()=>{t+=.05;const s=Math.sin(Math.min(1,t)*Math.PI);m.color.copy(base).lerp(hi,s*.7);if(t>=1){clearInterval(iv);m.color.copy(base)}},40)}
 /* digitala flöden: ett litet dokument som glider längs golvet */
 const PK=[];
@@ -370,7 +370,7 @@ function up(e){const wasDrag=moved>6;delete pts[e.pointerId];if(Object.keys(pts)
   drag=null;view.classList.remove('drag')}
 addEventListener('pointerup',up);addEventListener('pointercancel',up);
 let hovT=0;view.addEventListener('pointermove',e=>{if(drag||performance.now()-hovT<90)return;hovT=performance.now();const hid=pickAt(e.clientX,e.clientY);view.classList.toggle('hov',!!hid);for(const k in AG)AG[k].stEl.firstChild.classList.toggle('hov',k===hid)});
-function clampZ(z){return Math.max(1.1,Math.min(overviewZoom()*1.25,z))}
+function clampZ(z){return Math.max(1.1,Math.min(overviewZoom()*1.2,z))}
 function pan(dx,dy,tx0,tz0){const wpp=2*C.zoom/innerHeight;const yaw=C.yaw;const rx=Math.cos(yaw),rz=Math.sin(yaw);const fx=Math.sin(yaw),fz=-Math.cos(yaw);const sp=Math.max(.3,Math.sin(C.pitch));
   G.tx=tx0-rx*dx*wpp+fx*dy*wpp/sp;G.tz=tz0-rz*dx*wpp+fz*dy*wpp/sp;G.tx=Math.max(-2,Math.min(W+2,G.tx));G.tz=Math.max(-2,Math.min(D+2,G.tz));C.tx=G.tx;C.tz=G.tz}
 function clampYaw(y){return Math.max(.25,Math.min(1.25,y))}
