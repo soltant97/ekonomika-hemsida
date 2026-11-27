@@ -666,3 +666,11 @@ html{scroll-padding-top:100px}
 .vd-tag{padding:0;border:0;background:transparent;border-radius:0;font-size:13px;color:var(--muted);font-weight:600}
 @media (max-width:860px){.vd-every,.vd-m{grid-template-columns:1fr;gap:14px;padding:28px 0}.vd-ev-h b,.vd-m h3{font-size:28px}.vd-m li{grid-template-columns:70px 1fr}}
 .vd-every{align-items:start}.vd-ev-h{gap:6px}
+.ed-img{margin:28px 0 0;max-width:360px}
+.ed-img img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:45% 50%}
+@media (max-width:860px){.ed-img{max-width:none;margin-top:18px}.ed-img img{aspect-ratio:3/2}}
+.ed-list{align-content:start}
+.ed-img img{aspect-ratio:9/10}@media (max-width:860px){.ed-img img{aspect-ratio:3/2}}
+@media (min-width:861px){.ed-img img{aspect-ratio:4/3}}
+#vanliga-fragor{border-top:1px solid rgba(255,255,255,.16)}
+@media (min-width:861px){.ed-cat{display:flex;flex-direction:column}.ed-img{flex:1 1 0;min-height:0;position:relative}.ed-img img{position:absolute;inset:0;height:100%;aspect-ratio:auto}}
