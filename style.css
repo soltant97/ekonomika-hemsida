@@ -601,3 +601,6 @@ html{scroll-padding-top:100px}
 #vilka-vi-hjalper .who-grid > div:first-child{padding-top:34px}
 @media (max-width:860px){#vilka-vi-hjalper .who-grid > div:first-child{padding-top:0}}
 .once-btns{display:flex;flex-wrap:wrap;gap:12px}
+#vanliga-fragor{background:var(--green);border-color:var(--green)}
+#vanliga-fragor .sec-head h2{color:#fff}
+#vanliga-fragor .faq details{border-color:transparent}
