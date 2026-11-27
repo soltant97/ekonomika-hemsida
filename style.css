@@ -604,3 +604,6 @@ html{scroll-padding-top:100px}
 #vanliga-fragor{background:var(--green);border-color:var(--green)}
 #vanliga-fragor .sec-head h2{color:#fff}
 #vanliga-fragor .faq details{border-color:transparent}
+.branches span{background:transparent;border:2px solid var(--ink);padding:9px 19px;color:var(--ink)}
+.once-btns .btn-outline{background:#fff;border:1px solid var(--line);color:var(--ink)}
+.once-btns .btn-outline:hover{background:var(--mint);border-color:var(--green);color:var(--green)}
