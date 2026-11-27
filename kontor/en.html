@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ekonomika’s office – concept prototype</title>
+<link rel="icon" href="favicon.png">
+<link rel="stylesheet" href="style.css?v=1795797386">
+<script type="importmap">{"imports":{"three":"./lib/three.module.min.js"}}</script>
+</head>
+<body>
+<div id="view" aria-hidden="true"></div><div id="labels" aria-hidden="true"></div><div id="loading">Opening the office…</div>
+
+<div class="hud card" id="intro">
+  <img src="logo-color.png" alt="Ekonomika">
+  <h1>Welcome to the office</h1>
+  <p>Click a team member to see, step by step, how we handle bookkeeping, reports, taxes, year-end and payroll.</p>
+</div>
+
+
+<div class="hud" id="dock">
+  <nav class="card" id="roster" aria-label="Team members"></nav>
+  <div class="card" id="ctrl">
+    <button type="button" class="flow" id="flowbtn" aria-pressed="true"><i></i><span>Show flows</span></button>
+    <button type="button" id="rl" aria-label="Turn left">⟲</button><button type="button" id="rr" aria-label="Turn right">⟳</button><button type="button" id="zin" aria-label="Zoom in">+</button>
+    <button type="button" id="zout" aria-label="Zoom out">−</button>
+  </div>
+</div>
+<div id="hint">Drag to turn the office. Right-click and drag to move, scroll to zoom.</div>
+
+<aside class="card" id="panel" aria-label="Team member" aria-hidden="true">
+  <div class="p-top"><div class="av" id="pav"><span></span></div><div><h2 id="pname"></h2><p id="pdept"></p></div><button type="button" class="p-x" id="pclose" aria-label="Back to the whole office">✕</button></div>
+  <div class="p-body" id="pbody"></div>
+  <div class="p-act"><button type="button" class="btn" id="pmore">Read more</button><button type="button" class="btn pri" id="pchat">Chat</button></div>
+  <div class="chat">
+    <div class="msgs" id="msgs"></div>
+    <div class="sugg" id="sugg"></div>
+    <p class="proto">Prototype. The answers are pre-written examples.</p>
+    <form class="cform" id="cform"><input id="cin" placeholder="Type a question…" autocomplete="off" aria-label="Your question"><button type="submit">Send</button></form>
+  </div>
+</aside>
+
+<script type="module" src="main-en.js?v=1795797386"></script>
+</body>
+</html>
