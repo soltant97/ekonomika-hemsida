@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ekonomikas kontor – konceptprototyp</title>
+<link rel="icon" href="favicon.png">
+<link rel="stylesheet" href="style.css">
+<script type="importmap">{"imports":{"three":"./lib/three.module.min.js"}}</script>
+</head>
+<body>
+<div id="view" aria-hidden="true"></div><div id="labels" aria-hidden="true"></div><div id="loading">Kontoret öppnar…</div>
+
+<div class="hud card" id="intro">
+  <img src="logo-color.png" alt="Ekonomika">
+  <h1>Välkommen in på kontoret</h1>
+  <p>Klicka på en avdelning för att veta mer om vad våra medarbetare kan hjälpa dig med.</p>
+</div>
+
+<aside class="hud card" id="feed" aria-label="Händer på kontoret">
+  <div id="stats"><div><b id="s1">1 043</b><span>verifikationer i år</span></div><div><b id="s2">98 %</b><span>konton avstämda</span></div><div><b id="s3">0</b><span>missade deadlines</span></div></div>
+</aside>
+
+<div class="hud" id="dock">
+  <nav class="card" id="roster" aria-label="Medarbetare"></nav>
+  <div class="card" id="ctrl">
+    <button type="button" class="flow" id="flowbtn" aria-pressed="true"><i></i><span>Visa flöden</span></button>
+    <button type="button" id="rl" aria-label="Vrid åt vänster">⟲</button><button type="button" id="rr" aria-label="Vrid åt höger">⟳</button><button type="button" id="zin" aria-label="Zooma in">+</button>
+    <button type="button" id="zout" aria-label="Zooma ut">−</button>
+  </div>
+</div>
+<div id="hint">Dra för att vrida runt kontoret. Högerklicka och dra för att flytta, scrolla för att zooma.</div>
+
+<aside class="card" id="panel" aria-label="Medarbetare" aria-hidden="true">
+  <div class="p-top"><div class="av" id="pav"><span></span></div><div><h2 id="pname"></h2><p id="pdept"></p></div><button type="button" class="p-x" id="pclose" aria-label="Tillbaka till hela kontoret">✕</button></div>
+  <div class="p-body" id="pbody"></div>
+  <div class="p-act"><button type="button" class="btn" id="pmore">Läs mer</button><button type="button" class="btn pri" id="pchat">Chatta</button></div>
+  <div class="chat">
+    <div class="msgs" id="msgs"></div>
+    <div class="sugg" id="sugg"></div>
+    <p class="proto">Prototyp. Svaren är förskrivna exempel.</p>
+    <form class="cform" id="cform"><input id="cin" placeholder="Skriv en fråga…" autocomplete="off" aria-label="Din fråga"><button type="submit">Skicka</button></form>
+  </div>
+</aside>
+
+<script type="module" src="main.js"></script>
+</body>
+</html>
