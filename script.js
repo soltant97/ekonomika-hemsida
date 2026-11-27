@@ -269,6 +269,23 @@
     });
   }
 
+  /* förifylld tjänst från engångstjänsterna (?tjanst=...) */
+  (function () {
+    var t = new URLSearchParams(location.search).get('tjanst');
+    var form = document.getElementById('form');
+    if (!t || !form) return;
+    t = t.slice(0, 80);
+    var chips = form.querySelector('.chips');
+    if (chips) {
+      var lab = document.createElement('label'); lab.className = 'chip';
+      var inp = document.createElement('input'); inp.type = 'checkbox'; inp.name = 'need'; inp.value = t; inp.checked = true; inp.defaultChecked = true;
+      var sp = document.createElement('span'); sp.textContent = t;
+      lab.appendChild(inp); lab.appendChild(sp); chips.insertBefore(lab, chips.firstChild);
+    }
+    var msg = form.elements['message'];
+    if (msg && !msg.value) msg.value = t;
+  })();
+
   /* kontaktformuläret skickas via Formspree (sätt formulärets id i data-formspree) */
   document.querySelectorAll('form[data-formspree]').forEach(function (form) {
     form.addEventListener('submit', function (e) {
