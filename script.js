@@ -14,6 +14,12 @@
         toggle.focus();
       }
     });
+    menu.addEventListener('click', function (e) {
+      if (e.target.closest('a') && menu.classList.contains('open')) {
+        menu.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+    });
   }
 
 
