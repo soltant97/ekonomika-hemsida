@@ -607,3 +607,6 @@ html{scroll-padding-top:100px}
 .branches span{background:transparent;border:2px solid var(--ink);padding:9px 19px;color:var(--ink)}
 .once-btns .btn-outline{background:#fff;border:1px solid var(--line);color:var(--ink)}
 .once-btns .btn-outline:hover{background:var(--mint);border-color:var(--green);color:var(--green)}
+#digitala-losningar .flow > div{border-top-color:var(--line)}
+#digitala-losningar .flow .tag{color:var(--green)}
+#digitala-losningar .flow p{color:var(--muted)}
