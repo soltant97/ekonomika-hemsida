@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 import {RoomEnvironment} from './lib/RoomEnvironment.js';
-import {AGENTS,FLOWS,screenHtml,drawScreen} from './data-en.js';
+import {AGENTS,FLOWS,screenHtml,drawScreen} from './data-en.js?v=1795798358';
 import {rb,sp,cy,grp,mat,rbG,TEX,plant,chair,desk,imac,lamp,shelf,cabinet,glassWall,wallScreen,person} from './scene.js';
-import {stepsHtml,mountSteps} from './steps-en.js';
+import {stepsHtml,mountSteps} from './steps-en.js?v=1795798358';
 
 const byId={};AGENTS.forEach(a=>byId[a.id]=a);
 const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;

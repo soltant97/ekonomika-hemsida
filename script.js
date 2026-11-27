@@ -425,3 +425,31 @@
   ds.forEach(function(d,k){d.addEventListener('click',function(){pin();busy=false;show(k)})});
   show(0);
 })();
+
+/* Behåll scrollposition vid språkbyte */
+(function () {
+  var KEY = 'langScroll';
+  function secs() { return [].slice.call(document.querySelectorAll('section')); }
+  function absTop(el) { return el.getBoundingClientRect().top + window.pageYOffset; }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[hreflang]');
+    if (!a || a.getAttribute('aria-current') === 'true') return;
+    var y = window.pageYOffset, list = secs(), idx = -1, frac = 0;
+    for (var i = 0; i < list.length; i++) { if (absTop(list[i]) <= y + 1) idx = i; }
+    if (idx >= 0) { var t = absTop(list[idx]), h = list[idx].offsetHeight || 1; frac = Math.min(1, (y - t) / h); }
+    try { sessionStorage.setItem(KEY, JSON.stringify({ i: idx, f: frac, y: y, p: (y / Math.max(1, document.documentElement.scrollHeight - innerHeight)) })); } catch (err) {}
+  }, true);
+  var raw = null;
+  try { raw = sessionStorage.getItem(KEY); sessionStorage.removeItem(KEY); } catch (err) {}
+  if (!raw || location.hash) return;
+  var s; try { s = JSON.parse(raw); } catch (err) { return; }
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  function go() {
+    var list = secs(), top;
+    if (s.i >= 0 && list[s.i]) top = absTop(list[s.i]) + s.f * list[s.i].offsetHeight;
+    else top = s.i < 0 ? s.y : s.p * (document.documentElement.scrollHeight - innerHeight);
+    window.scrollTo({ top: Math.max(0, top), behavior: 'instant' });
+  }
+  go();
+  if (document.readyState !== 'complete') window.addEventListener('load', go);
+})();
