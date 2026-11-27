@@ -643,3 +643,26 @@ html{scroll-padding-top:100px}
 .office-welcome{position:relative;margin:8px auto -46px;text-align:center;border-radius:22px;padding:18px 22px 20px}
 .office-welcome img{margin:0 auto 10px}
 .office-welcome::after{content:"";position:absolute;left:50%;bottom:-11px;width:22px;height:22px;background:#fff;border-right:1px solid var(--line);border-bottom:1px solid var(--line);transform:translateX(-50%) rotate(45deg);border-bottom-right-radius:4px}
+/* viktiga datum: redaktionell layout som tjänster */
+.vd-every{grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:48px;padding:36px 0;border-radius:0;background:transparent;color:var(--ink);border-top:1.5px solid var(--ink);margin:0}
+.vd-ev-h{padding:0;border:0}
+.vd-ev-h b{color:var(--ink);font-size:34px;font-weight:800;letter-spacing:-.02em;line-height:1.1}
+.vd-ev-h span{font-size:17px;font-weight:700;color:var(--green);letter-spacing:0}
+.vd-every p{color:var(--muted);font-size:17px;line-height:1.6}
+.vd-list{grid-template-columns:1fr;gap:0}
+.vd-m{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:48px;background:transparent;border:0;border-top:1.5px solid var(--ink);border-radius:0;padding:36px 0}
+.vd-m:last-child{border-bottom:1.5px solid var(--ink)}
+.vd-m h3{padding:0;border:0;font-size:34px;justify-content:flex-start;align-self:start;gap:14px}
+.vd-m.is-now{border:0;border-top:1.5px solid var(--ink);box-shadow:none}
+.vd-m li{grid-template-columns:84px 1fr;gap:4px 20px;padding:16px 0;border-bottom:1px solid var(--line)}
+.vd-m li:first-child{padding-top:4px}
+.vd-m li+li{border-top:0}
+.vd-d{flex-direction:row;align-items:baseline;justify-content:flex-start;gap:6px;width:auto;height:auto;border-radius:0;background:transparent}
+.vd-d b{font-size:22px;color:var(--ink)}
+.vd-d small{margin:0;font-size:14px}
+.vd-d-t b{font-size:17px}
+.vd-x{font-size:16px;line-height:1.5}
+.vd-tags{gap:4px 14px}
+.vd-tag{padding:0;border:0;background:transparent;border-radius:0;font-size:13px;color:var(--muted);font-weight:600}
+@media (max-width:860px){.vd-every,.vd-m{grid-template-columns:1fr;gap:14px;padding:28px 0}.vd-ev-h b,.vd-m h3{font-size:28px}.vd-m li{grid-template-columns:70px 1fr}}
+.vd-every{align-items:start}.vd-ev-h{gap:6px}
