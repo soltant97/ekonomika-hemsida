@@ -674,6 +674,6 @@ html{scroll-padding-top:100px}
 @media (min-width:861px){.ed-img img{aspect-ratio:4/3}}
 #vanliga-fragor{border-top:1px solid rgba(255,255,255,.16)}
 @media (min-width:861px){.ed-cat{display:flex;flex-direction:column}.ed-img{flex:1 1 0;min-height:0;position:relative}.ed-img img{position:absolute;inset:0;height:100%;aspect-ratio:auto}}
-.ed-img.ed-img-full{flex:none;position:static;max-width:240px}
-.ed-img.ed-img-full img{position:static;height:auto;aspect-ratio:1/1;object-fit:contain}
-@media (max-width:860px){.ed-img.ed-img-full{max-width:260px}}
+.ed-img.ed-img-full{flex:none;position:static;max-width:360px}
+.ed-img.ed-img-full img{position:static;height:auto;aspect-ratio:1488/1000;object-fit:cover}
+@media (max-width:860px){.ed-img.ed-img-full{max-width:none}}
